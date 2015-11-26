@@ -31,6 +31,15 @@
  *   easy to change at this point.
  */
 
+
+#define COLS        100
+#define ROWS        35
+
+#define DCOLS       (COLS - SIDE_BAR - 1)
+#define DROWS       (ROWS - BOT_BAR - 2)
+
+#define SIDE_BAR    20
+#define BOT_BAR     3
 // Marks enum as a Flag, allowing you to combine them. Bitwise hack.
 #define Fl(N)           (1 << (N))
 
@@ -52,18 +61,78 @@ typedef struct pcell
         cellDisplayBuffer appearance;
 } pcell;
 
+typedef struct randomRange
+{
+        short lower;
+        short upper;
+        short smudge;
+};
+
 // We probably want to populate item information from some sort of
 // catalog. Will show example in creature vs creatureClass/type..
+
+enum itemCategory
+{
+        FOOD,
+        TOOL,
+        WEAPON,
+        ARMOR,
+        KEYS,
+        MISC,
+        
+        NUMBER_ITEM_CATEGORIES
+};
+
+typedef struct stats_t
+{
+    short str;
+    short dex;
+    short intel;
+};
+
+enum attributes
+{
+    STRENGTH,
+    DEXTERITY,
+    INTELLIGENCE
+};
+
+typedef struct itemClassTable
+{
+        char name[30];
+        short category;
+        short classID;
+        unsigned long flags; // Modifiers applied to all weapons of class?
+        char description[500];
+};
+
+typedef struct itemTable {
+	char name[30];
+    short classID;
+	short rarity;
+	short marketValue;
+    short toolSkill;
+    stats_t requiredStats;
+	randomRange damage;
+    short range;
+    bool identified;
+    char description[1000];
+} itemTable;
+
 typedef struct item
 {
-        unsigned short category;
-        unsigned short kind;
-        unsigned short damage;
-        unsigned short armor;
-        unsigned short ammo;
-        stats_r *required_stats;
+        short category;
+        short itemClassID; 
+        short kind;
+        short damage;
+        short range;
+        short armor;
+        short ammo;
+        short quantity;
+        stats_t requiredStats;
         char display_character;
-        color_t *displayColor
+        color_t *foreColor;
+        color_t *backColor;
         char inventory_letter;
         char *description;
 
@@ -170,7 +239,7 @@ typedef struct creatureType
         color_t display_color;
         short startHP;
         short base_armor;
-        short base_accuracy;
+        stats_t base_stats;
         short base_damage;
         short base_speed;               // Faster creatures regen energy p faster?
         short base_vision;
@@ -202,6 +271,7 @@ typedef struct creature
         short energyRegen;              // Per turn
         short oxygenAmount;
         short nutritionLevel;
+        stats_t creatureStats;
 
         struct item *weapon;
         struct item *armor;
