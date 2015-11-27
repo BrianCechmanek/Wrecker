@@ -7,7 +7,8 @@
 
 #include "wrecker.h"
 
-pcell pmap[DCOLS][DROWS];
+pcell pmap[SCOLS][SROWS]; // Sector Columns/ Sector rows.
+displayBuffer dmap[DCOLS][DROWS]; // Maybe DCOLS/DROWS + a bit extra for scrolling?
 
 sectorData *sectors;
 creature player;

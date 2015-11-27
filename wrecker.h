@@ -49,16 +49,21 @@
 typedef struct cellDisplayBuffer
 {
         char character;
-        char fore_colors[3];
-        char back_colors[3];
+        color_t foreColor;
+        color_t backColor;
         char opacity;
-        bool needs_update;
+        bool needsUpdate;
 } cellDisplayBuffer;
 
-typedef struct pcell
-{
-        enum tile_type;
-        cellDisplayBuffer appearance;
+// Possibly build into layers? Then you can have water tiles, or ship walls with 
+// foundation beneath them?
+// TODO  Build tileFlags enum 
+typedef struct pcell {
+        enum tile_type;  
+        cellDisplayBuffer rememberedAppearance;
+        short volume; // Amount of o2 in cell, turn into array for mixing gases?
+        unsigned long flags; // Flags like 'contains creature, has_item
+        unsigned long terrainFlags;
 } pcell;
 
 typedef struct randomRange
@@ -333,3 +338,26 @@ typedef struct sectorData
         unsigned int sector_seed;
         unsigned int away_since;
 } sectorData;
+
+typedef struct coord
+{
+    short x;
+    short y;
+} coord;
+
+// X,Y = top left point of rectangle.
+typedef struct rectangle
+{
+        short x;
+        short y;
+        short width;
+        short height;
+} rectangle;
+// x,y = center point
+typedef struct circle
+{
+        short x;
+        short y;
+        short radius;
+} circle;
+
