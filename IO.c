@@ -83,13 +83,43 @@ itemTable *buildTable( char *filepath )
 // Might want to cook all of these into static Dbuff, build it up 
 // in sequence?
 
-displayBuffer getCellAppearance( short mapX, short mapY )
-{
-        displayBuffer newCell;
-        //Complicated rules for determinining cell display priority
+/*
+Get cell appearance based on priority of entities in cell.
+Perhaps some function to determine layer level? Allows us to build
+roof over ships until we can see inside.
 
-        newCell.needsUpdate = false;
-        return newCell;
+Priority:
+    1. Empty space
+    2. Floor type.
+    4. Item type. (if visible)
+    5.  Projectiles (maybe keep them on highest layer?)
+    6. Creature Type (if visible)
+    7. Wall structure?
+    8. object roof (if can't see inside?)
+Cook object's base colors.
+Apply lighting modifier.
+ */
+ // TODO finish basic functionality, can add complexity later.
+void getCellAppearance(short x, short y, char *returnChar, color_t *returnFore, color_t *returnBack)
+{
+        char newChar;
+        creature *alien;
+        item *tileItem;
+        color_t foreColor, backColor;
+
+        //Complicated rules for determinining cell display priority
+        if (pMap[x][y].flags & HAS_CREATURE) {
+                alien = findAlien( x, y );
+        }
+        if (pMap[x][y].flags & HAS_ITEM) {
+                tileItem = findItem(x, y);
+        }
+
+        if (!playerCanSee( x, y ) && pMap[x][y].flags & (REVEALED) ) {
+                newChar = pmap[x][y].rememberedChar;
+                foreColor = pmap[x][y].rememberedFore;
+                backColor = pmap[x][y].rememberedBack;
+        }
 }
 
 point getVisibleScreen( short camX, short camY)
