@@ -51,7 +51,7 @@ itemTable *buildTable( char *filepath )
         char lineBuffer[2000];
         FILE *dataTable;
 
-        if (( dataTable = fopen( filepath, "r") ) == NULL {
+        if (( dataTable = fopen( filepath, "r")) ) == NULL {
             printf("Error opening table file.\n");
             break; // This mkight be wrong? not sure how to handle.
         }
@@ -100,25 +100,100 @@ Cook object's base colors.
 Apply lighting modifier.
  */
  // TODO finish basic functionality, can add complexity later.
+ // TODO findAlien, findItem, findPlayer, getMappableTile(), applyNotVisibleColoring();
 void getCellAppearance(short x, short y, char *returnChar, color_t *returnFore, color_t *returnBack)
 {
         char newChar;
-        creature *alien;
-        item *tileItem;
-        color_t foreColor, backColor;
+        creature *alien = NULL;
+        item *tileItem = NULL;
+        color_t newForeColor, newBackColor;
+        enum tileType newTileType;
+        short i, terrainLayers;
 
-        //Complicated rules for determinining cell display priority
-        if (pMap[x][y].flags & HAS_CREATURE) {
+        if (pMap[x][y].flags & HAS_ALIEN) {
                 alien = findAlien( x, y );
         }
         if (pMap[x][y].flags & HAS_ITEM) {
                 tileItem = findItem(x, y);
         }
+        if (pMap[x][y].flags & HAS_PLAYER) {
+            alien = findPlayer();
+        }
+        // If discovered, but we don't know anything about the inside.
+        if (!playerCanSee( x, y ) && (pMap[x][y].flags & (DISCOVERED)) 
+            && !(pMap[x][y].flags & (ITEM_DETECTED | ALIEN_DETECTED))
+            && !(pMap[x][y].flags & (WAS_VISIBLE | MAPPED) )) {
 
-        if (!playerCanSee( x, y ) && pMap[x][y].flags & (REVEALED) ) {
-                newChar = pmap[x][y].rememberedChar;
-                foreColor = pmap[x][y].rememberedFore;
-                backColor = pmap[x][y].rememberedBack;
+                newTileType = pMap[x][y].tileType[2]; // Grabs roof tile.
+
+                newChar = tileCatalog[newTileType].character;
+                newForeColor = tileCatalog[newTileType].foreColor;
+                newBackColor = tileCatalog[newTileType].backColor;
+        }
+        // If discovered, mapped (through a scan or something) but not seen.
+        else if (!playerCanSee( x, y ) && (pMap[x][y].flags & (DISCOVERED)) 
+            && !(pMap[x][y].flags & (ITEM_DETECTED | ALIEN_DETECTED))
+            && !(pMap[x][y].flags & (WAS_VISIBLE) )
+            && (pMap[x][y].flags & (MAPPED))) {
+
+                newTileType =  getMappableTile(pMap[x][y].tileType);
+
+                newChar = tileCatalog[newTileType].character;
+                newForeColor = tileCatalog[MAPPED_OBJECT].foreColor;
+                newBackColor = tileCatalog[MAPPED_OBJECT].backColor;
+        }
+        // If discovered, we've seen the tile ourselves but can't see anymore.
+        else if (!playerCanSee( x, y ) && (pMap[x][y].flags & (DISCOVERED)) 
+            && !(pMap[x][y].flags & (ITEM_DETECTED | ALIEN_DETECTED))
+            && (pMap[x][y].flags & (WAS_VISIBLE) ) ) {
+
+            newChar = pmap[x][y].rememberedChar;
+            newForeColor = pmap[x][y].rememberedAppearance.foreColor;
+            newBackColor = pmap[x][y].rememberedAppearance.backColor;
+            
+            applyNotVisibleColoring( &foreColor, &backColor );
+        }
+        else {
+            // Begin with empty space tile, then build up!
+            newChar = tileCatalog[SPACE].character;
+            newForeColor = tileCatalog[SPACE].foreColor;
+            newBackColor = tileCatalog[SPACE].backColor;
+            tileType = SPACE;
+
+            // Build up terrain through layers (Floor/Insides/Roof)
+            
+            if ( !(pMap[x][y].flags & (DISCOVERED)) ) {
+                terrainLayers = 0;
+            } else {
+                terrainLayers = 2;
+            }
+            for ( i = 0; i < terrainLayers; i++) {
+                if (pMap[x][y]tileType[i]) {
+                    newTileType = pMap[x][y]tileType[i];
+                }
+            }
+
+            if (newTileType != SPACE) {
+                newForeColor = tileCatalog[newTileType].foreColor;
+                newBackColor = tileCatalog[newTileType].backColor;
+            }
+            if (!alien && !item && !critter) {
+                newChar = tileCatalog[newTileType].character;
+            }
+            else if (item && !alien) {
+                newChar = item->display_character;
+                newForeColor = item->foreColor;
+            }
+            else if (alien) {
+                newChar = alien->displayChar;
+                newForeColor = alien->foreColor;
+            }
+            // Calculate lighting effects in this function. 
+            bakeColors( x, y, &newForeColor, &newBackColor);
+
+            *returnChar = newChar;
+            *returnFore = newForeColor;
+            *returnBack = newBackColor;
         }
 }
 

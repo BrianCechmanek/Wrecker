@@ -59,7 +59,7 @@ typedef struct cellDisplayBuffer
 // foundation beneath them?
 // TODO  Build tileFlags enum 
 typedef struct pcell {
-        enum tile_type;  
+        enum tileType[3];  
         cellDisplayBuffer rememberedAppearance;
         short volume; // Amount of o2 in cell, turn into array for mixing gases?
         unsigned long flags; // Flags like 'contains creature, has_item
@@ -71,6 +71,72 @@ typedef struct randomRange
         short lower;
         short upper;
         short smudge;
+};
+
+enum tileCategories
+{
+        SPACE,
+        SHIPS,
+        ASTEROIDS,
+        ECOSYSTEM,
+        NUM_TILE_CATEGORIES
+};
+
+enum tileTypes
+{
+        SPACE,
+        ROCK_FLOOR,
+        ROCK_WALL,
+        ROCK_ROOF,
+        ROCK_FEATURE,
+        ROCK_GLOWING_WALL,
+        ROCK_TUNNEL,
+
+        METAL_FLOOR,
+        METAL_WALL,
+        METAL_ROOF,
+        METAL_DOOR,
+        METAL_WALL_LIGHT,
+        METAL_VENT,
+        METAL_VENT_TUBING,
+        CARGO_DOOR,
+        AIRLOCK,
+        BULKHEAD,
+
+        CRYSTAL_FLOOR,
+        CRYSTAL_WALL,
+        CRYSTAL_FORMATION,
+        CRYSTAL_DOOR,
+        
+        LAVA,
+        WATER,
+        GRASS,
+        TREES,
+
+        CORRUPTED_SOURCE,
+
+        SHIELD,
+
+        NUM_OF_TILETYPES
+};
+
+enum tileFlags
+{
+        DISCOVERED      = Fl(0), //Has player seen this somehow.
+        DETECTED        = Fl(1), // Only applies to special Features.
+        VISIBLE         = Fl(2), //Is player looking at it right now.
+        MAPPED          = Fl(3), // Player knows about Cell contents (middle layer)
+        HAS_PLAYER      = Fl(4),
+        HAS_ALIEN       = Fl(5),
+        HAS_ITEM        = Fl(6),
+        WAS_VISIBLE     = Fl(7),
+        SECRET_MONSTER  = Fl(8),
+        ITEM_DETECTED   = Fl(9),
+        ALIEN_DETECTED  = Fl(10),
+        DESTRUCTABLE    = Fl(11),
+        VACUUM_EXPOSED  = Fl(12),
+        
+        PERMANENT_FLAGS = ( DISCOVERED | DETECTED | HAS_ITEM | SECRET_MONSTER )
 };
 
 // We probably want to populate item information from some sort of
@@ -240,8 +306,9 @@ typedef struct creatureType
 {
         enum alienTypes alienID;
         char monster_name[30];
-        char display_char;
-        color_t display_color;
+        char displayChar;
+        color_t foreColor;
+        color_t backColor;
         short startHP;
         short base_armor;
         stats_t base_stats;
