@@ -222,7 +222,7 @@ typedef struct inventory
         struct item *itemList;
 } inventory;
 
-enum alienTypes
+enum alienType
 {
     AT_PLAYER,
 
@@ -361,7 +361,7 @@ typedef struct creature
         // short **mapToPlayer;
         // short **mapToSafety;
 
-        struct creature *nextCreature;
+        struct creature *nextAlien;
 
         bool needs_update;
 };

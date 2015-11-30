@@ -13,7 +13,7 @@ displayBuffer dmap[DCOLS][DROWS]; // Maybe DCOLS/DROWS + a bit extra for scrolli
 sectorData *sectors;
 creature player;
 playerCharacter spaceRogue;
-creature *aliens;
+creature *alienChain;
 creature *graveyard;
 item *floorItems;
 

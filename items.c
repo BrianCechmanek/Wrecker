@@ -7,7 +7,7 @@
 #include "wrecker.h"
 #include <stdlib.h>
 
-item initialize_new_item(void)
+item *initialize_new_item(void)
 {
         short i;
         item *new_item;
@@ -39,6 +39,15 @@ item *generateItem( short item_category, short item_class, short item_type)
 
 item *makeItemInto( item *new_item, short item_category, short item_class, short item_type)
 {
+}
+
+item *findFloorItem( short x, short y)
+{
+    item *listItem;
+
+    for (listItem = floorItems; listItem != NULL && (listItem->xLoc != x || listItem != y);
+         listItem = nextItem);
+    return listItem;
 }
 
 
