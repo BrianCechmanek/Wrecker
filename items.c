@@ -79,9 +79,39 @@ item *getStackedItemPrio( short x, short y )
 {
 }
 
+//Turn this into a macro.
+short freeInventorySpace( inventory *workInv ) {
+        return workInv->maxCapacity - workInv->filledSlots;
+}
+
+bool itemKindInInventory( item *theItem, inventory *theInv)
+{
+        item *tmp;
+
+        for ( tmp = theInv->itemList; tmp; tmp->nextItem) {
+                if ( tmp->category == theItem->category && tmp->kind == theItem->kind) {
+                        return true;
+                }
+        }
+        return false;
+}
+
+bool addItemToInventory( item *newItem, inventory *workInv )
+{
+}
+
+void alienGetsItem(creature *alien, item *newItem)
+{
+}
+
+
+        
 // Combine stacks of items (ammo, food whatever)
+// Run logic to check if items are STACKABLE and same kind in parent.
 void stackItems( item *itemA, item *itemB )
 {
+        itemA->quantity += itemB->quantity;
+        deleteItem(itemB);
 }
 
 // Checks if creature can Wield item. Applies to player. TODO
@@ -110,7 +140,10 @@ bool removeItem( item *theItem, item **itemChain )
         }
         return false;
 }
-         
+void deleteItem( *victimItem )
+{
+        free(victimItem);
+}
 // Cleanup function
 void freeItemChain( item **itemChain )
 {

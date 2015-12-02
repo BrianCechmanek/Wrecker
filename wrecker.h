@@ -162,6 +162,21 @@ enum attributes
     INTELLIGENCE
 };
 
+enum itemFlags
+{
+        EQUIPPED        = Fl(0),
+        STACKABLE       = Fl(1),
+        BROKEN          = Fl(2),
+        POWERED         = Fl(3),
+        SELLABLE        = Fl(4),
+        IS_KEY          = Fl(5),
+        FLAMMABLE       = Fl(6),
+        UNIDENTIFIED    = Fl(7),
+        //add? HEAVY, FIXED_IN_PLACE, RADIOACTIVE,
+}
+
+
+
 typedef struct itemClassTable
 {
         char name[30];
@@ -189,6 +204,7 @@ typedef struct item
         short category;
         short itemClassID; 
         short kind;
+        unsigned long flags;
         short damage;
         short range;
         short armor;
@@ -212,7 +228,8 @@ typedef struct item
 // Really simple implementation for now, can refactor later.
 typedef struct inventory
 {
-        unsigned short max_capacity;
+        unsigned short maxCapacity;
+        short filledSlots;
         struct item *itemList;
 } inventory;
 
