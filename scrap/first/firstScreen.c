@@ -4,9 +4,10 @@
 #include "first.h"
 
 pCell sectorMap[SCOLS][SROWS];
-displayBuffer dMap[60][25]; // Perhaps increase this, then only display part of it? less recalc.
+displayBuffer dMap[DCOLS][DROWS]; // Perhaps increase this, then only display part of it? less recalc.
 
 playerGlobals gameInfo;
+CameraGlobals camera;
 
 // lines up with enum DIRECTIONS
 int dirList[8][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
@@ -24,15 +25,15 @@ alienType alienCatalog[2] = {
     {0,     "PLAYER",       '@',       "white",        0}
 }
 
-void initGameInfo(void) {
+void initGameInfo(void)
+{
     gameInfo.playerAlien = initPlayer();
-    gameInfo.camX = 0;
-    gameInfo.camY = 0;
     int health = 100;
     int active = 1;
-    bool camMoved = 0;
     bool running = 1;
 }
+
+
     
 void initSectorMap(void)
 {
