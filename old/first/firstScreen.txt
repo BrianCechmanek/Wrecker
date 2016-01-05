@@ -1,0 +1,37 @@
+View height? 25
+View Width? 60
+
+RESIZEABLE SCREEN MUST BE PRIORITY
+Bar to seperate actions screen.
+
+map; Only display part of map;
+
+NEEDS AND WANTS list
+
+"save points"
+Work on one feature at a time!!!!
+
+'minimum viable product'
+
+build map;
+build ship;
+insert ship / player.
+center camera on ship
+move player, move ship, move camera. TADA
+draw map
+    for y in view:
+        for x in view:
+            drawCell = get_cell(x,y (from sMap?);
+            if cell == empty : continue
+            terminal_put(disX, disY, drawCell;
+
+structs Floor?
+
+basic tile dictionary?
+
+FLAGS NEEDED FOR NOW
+Terrain Flag
+    obstructs Vision;
+    Obstructs Movement.
+
+Cell Flag.
