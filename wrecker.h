@@ -43,9 +43,6 @@
 // Marks enum as a Flag, allowing you to combine them. Bitwise hack.
 #define Fl(N)           (1 << (N))
 
-// Haven't thought this one through too much, but in theory we want
-// To blend a variety of colors, and only want to update cells that
-// have been affected by changes.
 typedef struct cellDisplayBuffer
 {
         char character;
@@ -55,9 +52,6 @@ typedef struct cellDisplayBuffer
         bool needsUpdate;
 } cellDisplayBuffer;
 
-// Possibly build into layers? Then you can have water tiles, or ship walls with 
-// foundation beneath them?
-// TODO  Build tileFlags enum 
 typedef struct pcell {
         enum tileType[3];  
         cellDisplayBuffer rememberedAppearance;
@@ -168,6 +162,21 @@ enum attributes
     INTELLIGENCE
 };
 
+enum itemFlags
+{
+        EQUIPPED        = Fl(0),
+        STACKABLE       = Fl(1),
+        BROKEN          = Fl(2),
+        POWERED         = Fl(3),
+        SELLABLE        = Fl(4),
+        IS_KEY          = Fl(5),
+        FLAMMABLE       = Fl(6),
+        UNIDENTIFIED    = Fl(7),
+        //add? HEAVY, FIXED_IN_PLACE, RADIOACTIVE,
+}
+
+
+
 typedef struct itemClassTable
 {
         char name[30];
@@ -195,6 +204,7 @@ typedef struct item
         short category;
         short itemClassID; 
         short kind;
+        unsigned long flags;
         short damage;
         short range;
         short armor;
@@ -218,7 +228,8 @@ typedef struct item
 // Really simple implementation for now, can refactor later.
 typedef struct inventory
 {
-        unsigned short max_capacity;
+        unsigned short maxCapacity;
+        short filledSlots;
         struct item *itemList;
 } inventory;
 
