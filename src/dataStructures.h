@@ -1,9 +1,6 @@
 #ifndef _DATASTRUCTURES_H
 #define _DATASTRUCTURES_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
 typedef struct Node
 {
     void *data;

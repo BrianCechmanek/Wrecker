@@ -8,6 +8,8 @@
 */
 
 #include "dataStructures.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 List *createList(void)
 {

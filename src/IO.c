@@ -1,8 +1,16 @@
+/*
+ *  Wrecker
+ *  IO.c 
+ *  Input/Output functions; controls; interacting with system.
+ */
+
 #include "IO.h"
 #include "wrecker.h"
-#include "dbg.h"
 #include "event.h"
 #include "diana.h"
+#include "dbg.h"
+
+#include <sys/time.h>
 
 /*
  * Current function for pulling game time.

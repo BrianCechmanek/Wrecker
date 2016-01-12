@@ -7,9 +7,6 @@
 #ifndef _EZ_EVENT_H
 #define _EZ_EVENT_H
 
-#include <stdlib.h>
-#include <string.h>
-
 #include "dataStructures.h"
 
 /*

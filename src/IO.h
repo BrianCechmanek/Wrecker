@@ -1,7 +1,7 @@
 #ifndef _IO_H
 #define _IO_H
 
-#include "config.h"
+#include <stdint.h>
 
 void initWrecker(void);
 uint64_t getTicks(void);

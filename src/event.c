@@ -5,6 +5,9 @@
 
 #include "event.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 typedef enum {
     LISTEN_ON,
     LISTEN_ONCE

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <sys/time.h>
 #include <math.h>
 #include <unistd.h>
 
