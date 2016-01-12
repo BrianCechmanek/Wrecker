@@ -1,5 +1,28 @@
-State Machine
-Windows Time solution.
-Learn CMAKE
+Graphics
+Pathfinding
+Field of view
+Map Representation
+    Map as tiles?
+    Chunks?
+    Display buffer?
+Input System
+Map Generation
+Terrain (destructible terrain seems doable)
+scheduling system
+combat mechanics
+Entity factories (something to build ships/charcaters/items out of their components)
+AI
+Save system
+Messaging
+Skills/Abilities (progression in general)
+Objects and Machines in the world
 
-Put some stuff together I dunno!
+State Machines:
+    Possible Player States?
+        flying ship,
+        regular movement,
+        inventories/menus,
+        targeting,
+        directional input mode
+
+Windows Time solution.
