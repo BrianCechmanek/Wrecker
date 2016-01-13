@@ -12,7 +12,7 @@
 
 gameState *wreckState;
 Event_s *eventSys;
-struct diana *diana;
+struct diana *wreckerD;
 
 int main(void)
 {
