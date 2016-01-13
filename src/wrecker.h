@@ -23,6 +23,21 @@ typedef struct gameState
     uint64_t timeCurrent;
 } gameState;
 
+typedef struct cellDisplayBuffer
+{
+    short code;
+    color_t foreColor;
+    color_t backColor;
+    bool needsUpdate;
+} cellDisplayBuffer;
+
+typedef struct Tile 
+{
+    enum tileType[3];
+    unsigned long tileFlags;
+    short volume;       //For tracking oxygen levels
+} Tile;
+
 /*
  *  Globals
  */
