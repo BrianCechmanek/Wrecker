@@ -4,6 +4,8 @@
  *  Wrecker
  *  map.h
  */
+enum tileType{
+};
 
 typedef struct Tile 
 {
@@ -11,5 +13,16 @@ typedef struct Tile
     unsigned long tileFlags;
     short volume;       //For tracking oxygen levels
 } Tile;
+
+enum tileFlagTypes
+{
+    DISCOVERED              = Fl(0),  // UNUSED
+    HAS_PLAYER              = Fl(1),
+    HAS_ALIEN               = Fl(2),
+    HAS_SHIP                = Fl(3),
+    OBSTRUCTS_MOVEMENT      = Fl(4),
+    OBSTRUCTS_VISION        = Fl(5),
+    IS_VACUUM               = Fl(6) // UNUSED
+};
 
 #endif
