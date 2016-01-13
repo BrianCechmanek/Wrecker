@@ -11,6 +11,8 @@
 #include "BearLibTerminal.h"
 #include "dbg.h"
 
+#include "map.h"
+
 #define MS_PER_UPDATE 14
 #define UPDATE_PER_FRAME 10
 
@@ -30,13 +32,6 @@ typedef struct cellDisplayBuffer
     color_t backColor;
     bool needsUpdate;
 } cellDisplayBuffer;
-
-typedef struct Tile 
-{
-    enum tileType[3];
-    unsigned long tileFlags;
-    short volume;       //For tracking oxygen levels
-} Tile;
 
 /*
  *  Globals
