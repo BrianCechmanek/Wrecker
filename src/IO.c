@@ -45,23 +45,23 @@ void initEventSys(){
 void dianaBuild(void)
 {
     allocate_diana(emalloc, free, &diana);
-    buildComponents();
+    registerComponents();
     // buildSystems();
 }
 
-void buildComponents(void)
+void registerComponents(void)
 {
     WRECK(createComponent, "position", sizeof(Position_c), DL_COMPONENT_FLAG_INLINE, &positionComponent);
-
+    WRECK(createComponent, "render", sizeof(Render_c), DL_COMPONENT_FLAG_INLINE, &renderComponent);
+    WRECK(createComponent, "velocity", sizeof(Velocity_c), DL_COMPONENT_FLAG_INLINE, &velocityComponent);
+}
 
 /*
  * Inits game state and allocates memory for DIANA
  */
 
-
 void initWrecker(){
     initWreckState();
     initEventSys();
     dianaBuild(void);
-    log_info("Wrecker systems initialized successfully");
 }
