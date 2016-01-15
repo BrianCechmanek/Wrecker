@@ -17,7 +17,7 @@ extern unsigned int movementSystem;
 
 int buildMovementSystem(void)
 {
-    WRECK(createSystem, "movement", NULL, processMovementSystem, NULL, NULL, NULL, NULL,
+    WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
                          NORMAL_SYSTEM, &movementSystem);
     WRECK(watch, movementSystem, Position_c);
     WRECK(watch, movementSystem, Velocity_c);

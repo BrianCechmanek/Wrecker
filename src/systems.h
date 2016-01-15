@@ -9,6 +9,10 @@
 int buildMovementSystem(void);
 void p_Movement( struct diana *diana, void *ud, unsigned int e, float d);
 
+int buildRenderSystem(void);
+void p_Render(void);
+
 extern unsigned int movementSystem;
+extern unsigned int renderSystem;
 
 #endif
