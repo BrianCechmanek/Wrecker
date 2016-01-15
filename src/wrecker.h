@@ -16,6 +16,9 @@
 #define MS_PER_UPDATE 14
 #define UPDATE_PER_FRAME 10
 
+#define WRECK(F, ...) do { int ___err = diana_ ## F (wreckerD, ## __VA_ARGS__); if(___err != DL_ERROR_NONE && ___err != DL_ERROR_FULL_COMPONENT) { printf("%s:%i diana_" #F "(wreckerD, " #__VA_ARGS__ ") -> %i\n", __FILE__, __LINE__, ___err); BRK(); } } while(0)
+
+
 typedef struct gameState
 {
     int currentState;
@@ -36,6 +39,12 @@ typedef struct cellDisplayBuffer
 /*
  *  Globals
  */
+
+// Component Globals
+static unsigned int Position;
+static unsigned int Velocity;
+static unsigned int Render;
+// State Globals
 extern gameState    *wreckState;
 extern Event_s      *eventSys;
 extern struct diana *diana;

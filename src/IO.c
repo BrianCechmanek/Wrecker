@@ -13,9 +13,6 @@
 
 #include <sys/time.h>
 
-// Macro for simplifying DIANA calls.
-#define WRECK(F, ...) do { int ___err = diana_ ## F (wreckerD, ## __VA_ARGS__); if(___err != DL_ERROR_NONE && ___err != DL_ERROR_FULL_COMPONENT) { printf("%s:%i diana_" #F "(wreckerD, " #__VA_ARGS__ ") -> %i\n", __FILE__, __LINE__, ___err); BRK(); } } while(0)
-
 /*
  * Current function for pulling game time.
  * It's probably bad for some reason.

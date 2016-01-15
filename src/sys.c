@@ -1,15 +1,15 @@
 /*  Wrecker
  *   sys.c
  *   Source file for Wrapper/System functions.
- *   Example: Error-Memory-Alloc (emalloc)
  *            
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include "dbg.h"
 
-// Throws an Error and crashed if memory allocation fails, saving us from testing
+// Throws an Error and crashes if memory allocation fails, saving us from testing
 // it every damn time.
+
 void *emalloc(size_t size)
 {
     void *p;
@@ -20,3 +20,4 @@ void *emalloc(size_t size)
     }
     return p;
 }
+
