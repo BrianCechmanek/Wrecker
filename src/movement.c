@@ -1,26 +1,25 @@
 /*
- * I spent too long thinking of a title for this file;
- * Didn't want to move systems into differnet files until
- * I have a better way of organizing them.
+ * Movement.c 
+ * Initital movement system, mostly to be used as template. 
+ *  
  */
 
 #include "systems.h"
 
 #include "wrecker.h"
 #include "components.h"
-#include "diana.h"
 
 #define NORMAL_SYSTEM 0
 #define PASSIVE_SYSTEM 1
 
-extern unsigned int movementSystem;
+unsigned int movementSystem;
 
-int buildMovementSystem(void)
+int initMovementSystem(void)
 {
     WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
                          NORMAL_SYSTEM, &movementSystem);
-    WRECK(watch, movementSystem, Position_c);
-    WRECK(watch, movementSystem, Velocity_c);
+    WRECK(watch, movementSystem, Position);
+    WRECK(watch, movementSystem, Velocity);
     return 0;
 }
                                           

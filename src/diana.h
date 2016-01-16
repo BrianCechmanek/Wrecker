@@ -1,11 +1,5 @@
-// vim: ts=2:sw=2:noexpandtab
-
 #ifndef __DIANA_H__
 #define __DIANA_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define DIANA_VERSION "0.0.3.0"
 
@@ -14,8 +8,6 @@ extern "C" {
 #endif
 
 #include <stddef.h>
-
-// errors
 enum {
 	DL_ERROR_NONE,
 	DL_ERROR_OUT_OF_MEMORY,
@@ -148,9 +140,5 @@ int diana_setComponentI(struct diana *diana, unsigned int entity, unsigned int c
 int diana_getComponentI(struct diana *diana, unsigned int entity, unsigned int component, unsigned int i, void ** ptr);
 
 int diana_removeComponentI(struct diana *diana, unsigned int entity, unsigned int component, unsigned int i);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

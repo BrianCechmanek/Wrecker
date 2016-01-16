@@ -4,12 +4,17 @@
  *  Wrecker
  *  map.h
  */
+
+#define Fl(N)   (1 << (N))
+
 enum tileType{
+    NONE,
+    WALL, 
 };
 
 typedef struct Tile 
 {
-    enum tileType[3];
+    enum tileType tileLayer[3];
     unsigned long tileFlags;
     short volume;       //For tracking oxygen levels
 } Tile;

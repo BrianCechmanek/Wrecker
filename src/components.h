@@ -8,24 +8,28 @@
 
 #include "BearLibTerminal.h"
 
-typedef struct Position
+typedef struct Position_c
 {
     int x;
     int y;
 } Position_c;
 
-typedef struct Velocity
+typedef struct Velocity_c
 {
     int dx;
     int dy;
     int max;
 } Velocity_c;
 
-typedef struct Renderer
+typedef struct Render_c
 {
     int code;
     color_t *foreColor;
     color_t *backColor;
-} Renderer_c;
+} Render_c;
+
+extern unsigned int Position;
+extern unsigned int Velocity;
+extern unsigned int Render;
 
 #endif

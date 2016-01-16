@@ -6,13 +6,16 @@
  * System Management functions
  */
 
-int buildMovementSystem(void);
+#include "diana.h"
+
+int initMovementSystem(void);
 void p_Movement( struct diana *diana, void *ud, unsigned int e, float d);
 
-int buildRenderSystem(void);
-void p_Render(void);
+int initRenderSystem(void);
+void p_Render(struct diana *diana, void *ud, unsigned int e, float d);
+void render(void);
 
-extern unsigned int movementSystem;
 extern unsigned int renderSystem;
+extern unsigned int movementSystem;
 
 #endif

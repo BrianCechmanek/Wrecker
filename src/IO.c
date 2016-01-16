@@ -5,10 +5,12 @@
  */
 
 #include "IO.h"
+
 #include "wrecker.h"
 #include "event.h"
 #include "diana.h"
 #include "components.h"
+#include "systems.h"
 #include "dbg.h"
 
 #include <sys/time.h>
@@ -26,7 +28,7 @@ uint64_t getTicks(void)
 
 void initWreckState(void)
 {
-    wreckState = emalloc(sizeof gameState);
+    wreckState = emalloc(sizeof(gameState));
     wreckState->currentState = 1;
     wreckState->lastActual = getTicks();
     wreckState->clock = 0;
@@ -39,18 +41,25 @@ void initEventSys(){
     //registerEvents();
 }
 
-void dianaBuild(void)
-{
-    allocate_diana(emalloc, free, &diana);
-    registerComponents();
-    // buildSystems();
-}
-
 void registerComponents(void)
 {
-    WRECK(createComponent, "position", sizeof(Position_c), DL_COMPONENT_FLAG_INLINE, &positionComponent);
-    WRECK(createComponent, "render", sizeof(Render_c), DL_COMPONENT_FLAG_INLINE, &renderComponent);
-    WRECK(createComponent, "velocity", sizeof(Velocity_c), DL_COMPONENT_FLAG_INLINE, &velocityComponent);
+    WRECK(createComponent, "position", sizeof(Position_c), DL_COMPONENT_FLAG_INLINE, &Position);
+    WRECK(createComponent, "render", sizeof(Render_c), DL_COMPONENT_FLAG_INLINE, &Render);
+    WRECK(createComponent, "velocity", sizeof(Velocity_c), DL_COMPONENT_FLAG_INLINE, &Velocity);
+}
+
+void initSystems(void)
+{
+    initMovementSystem();
+    initRenderSystem();
+}
+
+void initECS(void)
+{
+    allocate_diana(emalloc, free, &wreckerD);
+    registerComponents();
+    initSystems();
+    WRECK(initialize);
 }
 
 /*
@@ -60,5 +69,21 @@ void registerComponents(void)
 void initWrecker(){
     initWreckState();
     initEventSys();
-    dianaBuild(void);
+    initECS();
+}
+
+void updateGame( void )
+{
+    WRECK( process, 0 );
+}
+
+void render(void)
+{
+    WRECK(processSystem, renderSystem, 0);
+    terminal_refresh();
+}
+
+void handleInput( int code )
+{
+    return;
 }

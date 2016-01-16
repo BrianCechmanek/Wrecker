@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
-void initWrecker(void);
 uint64_t getTicks(void);
+void initWrecker(void);
+void handleInput(int code);
+void updateGame(void);
 
 #endif
