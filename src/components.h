@@ -8,6 +8,8 @@
 
 #include "BearLibTerminal.h"
 
+typedef componentID componentID;
+
 typedef struct Position_c
 {
     int x;
@@ -28,8 +30,8 @@ typedef struct Render_c
     color_t *backColor;
 } Render_c;
 
-extern unsigned int Position;
-extern unsigned int Velocity;
-extern unsigned int Render;
+extern componentID Position;
+extern componentID Velocity;
+extern componentID Render;
 
 #endif

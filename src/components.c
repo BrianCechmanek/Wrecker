@@ -4,6 +4,6 @@
 
 #include "components.h"
 
-unsigned int Position;
-unsigned int Velocity;
-unsigned int Render;
+componentID Position;
+componentID Velocity;
+componentID Render;

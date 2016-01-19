@@ -9,6 +9,7 @@
 #include "wrecker.h"
 #include "event.h"
 #include "diana.h"
+#include "ECS.h"
 #include "components.h"
 #include "systems.h"
 #include "dbg.h"
@@ -39,27 +40,6 @@ void initWreckState(void)
 void initEventSys(){
     eventSys = newEvent_s();
     //registerEvents();
-}
-
-void registerComponents(void)
-{
-    WRECK(createComponent, "position", sizeof(Position_c), DL_COMPONENT_FLAG_INLINE, &Position);
-    WRECK(createComponent, "render", sizeof(Render_c), DL_COMPONENT_FLAG_INLINE, &Render);
-    WRECK(createComponent, "velocity", sizeof(Velocity_c), DL_COMPONENT_FLAG_INLINE, &Velocity);
-}
-
-void initSystems(void)
-{
-    initMovementSystem();
-    initRenderSystem();
-}
-
-void initECS(void)
-{
-    allocate_diana(emalloc, free, &wreckerD);
-    registerComponents();
-    initSystems();
-    WRECK(initialize);
 }
 
 /*

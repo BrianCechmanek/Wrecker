@@ -6,20 +6,22 @@
 
 #include "systems.h"
 
+#include "ECS.h"
 #include "wrecker.h"
 #include "components.h"
 
 #define NORMAL_SYSTEM 0
 #define PASSIVE_SYSTEM 1
 
-unsigned int movementSystem;
+sysID movementSystem;
 
 int initMovementSystem(void)
 {
     WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
                          NORMAL_SYSTEM, &movementSystem);
-    WRECK(watch, movementSystem, Position);
-    WRECK(watch, movementSystem, Velocity);
+    s_watchComponents( movementSystem, 2, Position, 
+                                          Velocity );
+
     return 0;
 }
                                           
@@ -29,8 +31,8 @@ void p_Movement( struct diana *diana, void *ud, unsigned int e, float d)
     Velocity_c    *v;
     int x0, y0;
 
-    WRECK( getComponent, e, Position, (void **)&p);
-    WRECK( getComponent, e, Velocity, (void **)&v);
+    p = getComponent( e, Position);
+    v = getComponent( e, Velocity);
 
     x0 = p->x; y0 = p->y;
     p->x += v->dx;
@@ -41,3 +43,4 @@ void p_Movement( struct diana *diana, void *ud, unsigned int e, float d)
     //sendEvent( eSys, "actorMoved", {x0, y0, p->x, p->y} ); 
     
 }
+
