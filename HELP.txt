@@ -1,0 +1,66 @@
+Current Process to add a component/system and not break anything.
+
+JUST BASICS
+Add Component:
+    Add componentID identifier in Components.c
+    declare the ID as global (extern) in components.h
+    Define struct in components.h
+        name struct <name>_c
+    
+    Register the component in ECS.c
+
+add System:
+    try and keep Systems in their own .c file.
+    <Example: Movement.c Render.c Combat.c>
+    make sure to #include "systems.h". See other system files for reference.
+    
+    Requirements:
+    
+        theSystem.c:
+                    declare sysID identifier (example sysID collisionSystem).
+                    initFunction;
+                    p_Function; (process function);
+
+        systems.h
+                    declare initFunction;
+                    declare p_function. (process function);
+                    declare the sysID to be global;
+
+        ECS.c
+                    List your initFunction in initSystems.
+
+More detailed breakdown on making a system:
+
+    Systems need two functions, Init and Process. 
+    InitFunction:
+        Create system: 
+            See other system files for reference,
+            My examples in Movement/Render should work for most things.
+            Refer to DIANA doc for detailed info on createSystem arguments.
+            Biggest Difference is NORMAL_SYSTEM and PASSIVE_SYSTEM;
+            NORMAL is called every frame, PASSIVE is called whenever we specifcally call it.
+        
+        Tell system to watch components it is interested in.
+        s_watchComponents( systemName, num_of_components, com1, com2, etc.)
+
+    Process:
+    This function is what the ECS will call when it wants to use a system.
+    Process function must be built with following arguments:
+
+    * process_movement( struct diana *diana, void *data, entID entity, float delta); *
+
+    How to access components:
+        Declare component pointers for the components you want to access;
+        Retrieve components with getComponent( entID entity, componentID component);
+             ex: Position_c *pos;
+                 Velocity_c *vel;
+
+                pos = getComponent(e, Position);
+                vel = getComponent(e, Velocity);
+
+                can now access pos as struct pointer:
+                pos->xLoc = 10;
+                pos->yLoc = 5;
+                etc.
+    
+    Finally, add the initSystem function to 

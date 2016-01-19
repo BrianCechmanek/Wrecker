@@ -22,6 +22,12 @@
 
 #define WRECK(F, ...) do { int ___err = diana_ ## F (wreckerD, ## __VA_ARGS__); if(___err != DL_ERROR_NONE && ___err != DL_ERROR_FULL_COMPONENT) { printf("%s:%i diana_" #F "(wreckerD, " #__VA_ARGS__ ") -> %i\n", __FILE__, __LINE__, ___err); break; } } while(0)
 
+//  Typedefs to simplify common types
+typedef unsigned int sysID;
+typedef unsigned int componentID;
+typedef unsigned int entID;
+
+// Structs, probably will move these elsewhere
 typedef struct cellDisplayBuffer
 {
     short code;

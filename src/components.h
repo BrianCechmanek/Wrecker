@@ -6,9 +6,8 @@
  *  Components are Data; should be tucked away into a neat little struct.
  */
 
+#include "wrecker.h"
 #include "BearLibTerminal.h"
-
-typedef componentID componentID;
 
 typedef struct Position_c
 {

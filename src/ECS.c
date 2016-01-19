@@ -32,7 +32,7 @@ void s_watchComponents( SysID theSystem, int num_c, ...)
    Remember to CAST the void pointer after receiving it!
  */
 // Change to macro later.
-void *getComponent( unsigned int theEntity, componentID theComponent)
+void *getComponent( entID theEntity, componentID theComponent)
 {
         void *data;
         WRECK( getComponent, theEntity, theComponent, (void **)&data);

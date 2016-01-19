@@ -10,9 +10,6 @@
 #include "wrecker.h"
 #include "components.h"
 
-#define NORMAL_SYSTEM 0
-#define PASSIVE_SYSTEM 1
-
 sysID movementSystem;
 
 int initMovementSystem(void)
@@ -25,7 +22,7 @@ int initMovementSystem(void)
     return 0;
 }
                                           
-void p_Movement( struct diana *diana, void *ud, unsigned int e, float d)
+void p_Movement( struct diana *diana, void *ud, entID e, float d)
 {
     Position_c     *p;
     Velocity_c    *v;
