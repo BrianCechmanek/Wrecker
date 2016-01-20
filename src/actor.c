@@ -3,14 +3,14 @@
  * Actor Factory
  * WIP
  */
-
+/*
 #include "wrecker.h"
 #include "diana.h"
 
 typedef struct comListing
 {
     unsigned int component;
-    void *defaultValues;
+    void *defaultValue;
 } comListing;
 
 typedef unsigned int actorID;
@@ -30,4 +30,7 @@ actorID spawnActor( enum actorType )
 
 List *getListComponents( enum actorType )
 {
+    List *cList = createList();
 }
+
+*/

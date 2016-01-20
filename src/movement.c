@@ -26,18 +26,17 @@ void p_Movement( struct diana *diana, void *ud, entID e, float d)
 {
     Position_c     *p;
     Velocity_c    *v;
-    int x0, y0;
+//    int x0, y0;
 
     p = getComponent( e, Position);
     v = getComponent( e, Velocity);
 
-    x0 = p->x; y0 = p->y;
+//    x0 = p->x; y0 = p->y;
     p->x += v->dx;
     p->y += v->dy;
 
     v->dx = 0;
     v->dy = 0;
     //sendEvent( eSys, "actorMoved", {x0, y0, p->x, p->y} ); 
-    
 }
 
