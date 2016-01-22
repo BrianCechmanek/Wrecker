@@ -18,8 +18,7 @@
 #define NORMAL_SYSTEM   0
 #define PASSIVE_SYSTEM  1
 
-void s_watchComponents( SysID theSystem, int arg_c, ...)
-
+void s_watchComponents( sysID theSystem, int arg_c, ...);
 void *getComponent( entID entity, componentID compID);
 void initECS(void);
 

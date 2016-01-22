@@ -46,7 +46,8 @@ void initEventSys(){
  * Inits game state and allocates memory for DIANA
  */
 
-void initWrecker(){
+void initWrecker()
+{
     initWreckState();
     initEventSys();
     initECS();
