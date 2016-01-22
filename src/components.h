@@ -29,8 +29,18 @@ typedef struct Render_c
     color_t *backColor;
 } Render_c;
 
+typedef struct Model_c
+{
+    char *name;
+    int height;
+    int width;
+
+    char **map;
+}
+
 extern componentID Position;
 extern componentID Velocity;
 extern componentID Render;
+extern componentID Model;
 
 #endif

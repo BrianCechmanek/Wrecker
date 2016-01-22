@@ -7,19 +7,20 @@
 
 #define Fl(N)   (1 << (N))
 
-enum tileType{
+enum tile_type{
     NONE,
     WALL, 
+    FLOOR,
 };
 
 typedef struct Tile 
 {
-    enum tileType tileLayer[3];
+    unsigned short tileLayer[3]; // Made up of tileTypes.
     unsigned long tileFlags;
     short volume;       //For tracking oxygen levels
 } Tile;
 
-enum tileFlagTypes
+enum tile_flagList
 {
     DISCOVERED              = Fl(0),  // UNUSED
     HAS_PLAYER              = Fl(1),

@@ -44,6 +44,7 @@ void registerComponents(void)
     WRECK(createComponent, "position", sizeof(Position_c), DL_COMPONENT_FLAG_INLINE, &Position);
     WRECK(createComponent, "render", sizeof(Render_c), DL_COMPONENT_FLAG_INLINE, &Render);
     WRECK(createComponent, "velocity", sizeof(Velocity_c), DL_COMPONENT_FLAG_INLINE, &Velocity);
+    WRECK(createComponent, "model", sizeof(Model_c), DL_COMPONENT_FLAG_INLINE, &Model);
 }
 
 void initSystems(void)
