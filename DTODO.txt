@@ -1,0 +1,8 @@
+Main.c
+    Initialize / Resize Display buffer.
+
+IO.c 
+    resize window
+
+map.c
+    build Map_c out of Tile components.
