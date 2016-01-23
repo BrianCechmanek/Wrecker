@@ -17,6 +17,8 @@
 #define DBUFF_MEM_WIDTH 200
 #define DBUFF_MEM_HEIGHT 60
 
+#define SCREEN_W 80
+#define SCREEN_H 25
 #define MS_PER_UPDATE 14
 #define UPDATE_PER_FRAME 10
 
