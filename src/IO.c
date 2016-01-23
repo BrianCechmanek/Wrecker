@@ -29,34 +29,37 @@ uint64_t getTicks(void)
 
 void initWreckState(void)
 {
-    wreckState = emalloc(sizeof(gameState));
-    wreckState->currentState = 1;
-    wreckState->lastActual = getTicks();
-    wreckState->clock = 0;
-    wreckState->nextUpdate = 0;
-    wreckState->timeCurrent = 0;
+    Wrecker = emalloc(sizeof(gameState));
+    Wrecker->currentState = 1;
+    Wrecker->lastActual = getTicks();
+    Wrecker->clock = 0;
+    Wrecker->nextUpdate = 0;
+    Wrecker->timeCurrent = 0;
 
-    wreckState->screenHeight = 25;
-    wreckState->screenWidth = 80;
+    Wrecker->screenHeight = SCREEN_H;
+    Wrecker->screenWidth = SCREEN_W;
 }
 
-// Not assigned as continuous memory, as resizing is complicated.
-// Can refactor if needed.
+// Reworked; assigns extra initial memory to speed up resizing.
 void initDisplayBuffer(void)
 {
-    displayBuffer = emalloc( wreckState->screenWidth * sizeof(*displayBuffer));
-    for( i = 0; i < wreckState->screenWidth; i++){
-        displayBuffer[i] = emalloc( wreckState->screenHeight * sizeof(**displayBuffer));
-        memset(displayBuffer[i], 0, sizeof(**displayBuffer) * wreckState->screenHeight);
+    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * sizeof(*displayBuffer));
+    for( i = 0; i < DBUFF_MEM_HEIGHT; i++){
+        displayBuffer[i] = emalloc( DBUFF_MEM_WIDTH* sizeof(**displayBuffer));
+        memset(displayBuffer[i], 0, sizeof(**displayBuffer) * DBUFF_MEM_WIDTH);
     }
 }
 
-void resizeWindow()
+void _resizeWindow(void)
 {
-        wreckState->screenHeight = terminal_state(TK_HEIGHT);
-        wreckState->screenWidth= terminal_state(TK_WIDTH);
+   int newWidth  =  terminal_state(TK_WIDTH);
+   int newHeight =  terminal_state(TK_HEIGHT);
 
-
+    Wrecker->screenWidth  = newWidth;
+    Wrecker->screenHeight = newHeight;
+    //redrawScreen();
+}
+         
 void initEventSys(){
     eventSys = newEvent_s();
     //registerEvents();

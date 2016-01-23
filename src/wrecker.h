@@ -14,8 +14,8 @@
 #include "map.h"
 #include "event.h"
 
-#define SCREEN_W 80
-#define SCREEN_H 25
+#define DBUFF_MEM_WIDTH 200
+#define DBUFF_MEM_HEIGHT 60
 
 #define MS_PER_UPDATE 14
 #define UPDATE_PER_FRAME 10
@@ -52,9 +52,9 @@ typedef struct gameState
  */
 
 // State Globals
-extern gameState    *wreckState;
+extern gameState    *Wrecker;
 extern Event_s      *eventSys;
 extern struct diana *wreckerD;
-extern cellDisplayBuffer displayBuffer[SCREEN_W][SCREEN_H];
+extern cellDisplayBuffer **displayBuffer;
 
 #endif

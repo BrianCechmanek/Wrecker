@@ -11,7 +11,7 @@
 #include "diana.h"
 #include "systems.h"
 
-gameState *wreckState;
+gameState *Wrecker;
 Event_s *eventSys;
 struct diana *wreckerD;
 
@@ -28,17 +28,17 @@ int main(void)
     while (running){
 
         uint64_t actualTime = getTicks();
-        if (( actualTime - wreckState->lastActual) > (MS_PER_UPDATE * UPDATE_PER_FRAME) ){
-            wreckState->clock += (MS_PER_UPDATE * UPDATE_PER_FRAME);
+        if (( actualTime - Wrecker->lastActual) > (MS_PER_UPDATE * UPDATE_PER_FRAME) ){
+            Wrecker->clock += (MS_PER_UPDATE * UPDATE_PER_FRAME);
         } else {
-            wreckState->clock += (actualTime - wreckState->lastActual);
+            Wrecker->clock += (actualTime - Wrecker->lastActual);
         }
-        while (wreckState->clock >= wreckState->nextUpdate) {
-            wreckState->timeCurrent = wreckState->nextUpdate;
+        while (Wrecker->clock >= Wrecker->nextUpdate) {
+            Wrecker->timeCurrent = Wrecker->nextUpdate;
             updateGame();
-            wreckState->nextUpdate += MS_PER_UPDATE;
+            Wrecker->nextUpdate += MS_PER_UPDATE;
         }
-        wreckState->lastActual = getTicks();
+        Wrecker->lastActual = getTicks();
         render();
 
         while( running && terminal_has_input() ){
