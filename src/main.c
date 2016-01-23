@@ -11,15 +11,11 @@
 #include "diana.h"
 #include "systems.h"
 
-
-#define SCREEN_W 80
-#define SCREEN_H 25
-
 gameState *wreckState;
 Event_s *eventSys;
 struct diana *wreckerD;
 
-cellDisplayBuffer displayBuffer[SCREEN_W][SCREEN_H];
+cellDisplayBuffer **displayBuffer;
 
 int main(void)
 {

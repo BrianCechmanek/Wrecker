@@ -43,6 +43,8 @@ typedef struct gameState
     uint64_t clock;
     uint64_t nextUpdate;
     uint64_t timeCurrent;
+    int screenHeight;
+    int screenWidth;
 } gameState;
 
 /*

@@ -57,18 +57,6 @@ void s_watchComponents( sysID theSystem, int num_c, ...)
         va_end(ap);
 }
 
-<<<<<<< HEAD
-/* Returns a void pointer to the requested entities component.
-   Remember to CAST the void pointer after receiving it!
- */
-// Change to macro later.
-void *getComponent( entID theEntity, componentID theComponent)
-{
-        void *data;
-        WRECK( getComponent, theEntity, theComponent, (void **)&data);
-        return data;
-}
-
 void _initSystems(void)
 {
     initMovementSystem();

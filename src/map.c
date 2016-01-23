@@ -52,7 +52,7 @@ Model_c *loadModel( char *filename )
     model->map[0] = emalloc(height * width * sizeof(int));
     for ( int i = 0; i < height; i++){
             model->map[i] = model->map[0] + i * width;
-            memset(model->map[i], '\0', width);
+            //memset(model->map[i], '\0', width);
     }
 
     int j = 0;

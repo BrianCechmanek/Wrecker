@@ -35,7 +35,27 @@ void initWreckState(void)
     wreckState->clock = 0;
     wreckState->nextUpdate = 0;
     wreckState->timeCurrent = 0;
+
+    wreckState->screenHeight = 25;
+    wreckState->screenWidth = 80;
 }
+
+// Not assigned as continuous memory, as resizing is complicated.
+// Can refactor if needed.
+void initDisplayBuffer(void)
+{
+    displayBuffer = emalloc( wreckState->screenWidth * sizeof(*displayBuffer));
+    for( i = 0; i < wreckState->screenWidth; i++){
+        displayBuffer[i] = emalloc( wreckState->screenHeight * sizeof(**displayBuffer));
+        memset(displayBuffer[i], 0, sizeof(**displayBuffer) * wreckState->screenHeight);
+    }
+}
+
+void resizeWindow()
+{
+        wreckState->screenHeight = terminal_state(TK_HEIGHT);
+        wreckState->screenWidth= terminal_state(TK_WIDTH);
+
 
 void initEventSys(){
     eventSys = newEvent_s();
@@ -66,5 +86,10 @@ void render(void)
 
 void handleInput( int code )
 {
+    if (code == TK_RESIZED){
+        resizeWindow();
+    }
     return;
 }
+
+
