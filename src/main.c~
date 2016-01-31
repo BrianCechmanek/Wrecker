@@ -58,7 +58,7 @@ int main(void)
 		start += time;
 		double deltaMs = (double)timer_ticks_to_seconds(time) * 1000.0;
 		//printf("%u \n", time);
-		//printf("%G \n", deltaMs);
+		printf("%G \n", deltaMs);
 
 		// Get Input
 		while (terminal_has_input())

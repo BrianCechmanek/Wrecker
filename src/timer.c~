@@ -163,6 +163,8 @@ tick_t timer_system( void )
 	tick_t curclock = 0;
 	absolutetime_to_nanoseconds( mach_absolute_time(), &curclock );
 	return ( curclock / 1000000ULL );
+#elif TIMER_PLATFORM_LINUX
+	return 0;
 #elif TIMER_PLATFORM_POSIX
 
 	struct timespec ts = { .tv_sec = 0, .tv_nsec = 0 };

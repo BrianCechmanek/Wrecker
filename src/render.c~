@@ -29,7 +29,7 @@ void p_Render(struct diana *diana, void *user_data, unsigned int entity, float d
 	diana_getComponent(diana, entity, PositionID, (void **)&position);
 	diana_getComponent(diana, entity, RenderID, (void **)&renderer);
 
-	//printf("%i rendered at (%f,%f,%c)\n", entity, position->x, position->y, renderer->code);
+	printf("%i rendered at (%f,%f,%c)\n", entity, position->x, position->y, renderer->code);
     //displayBuffer[x][y].code = r->code;
     //displayBuffer[x][y].foreColor = r->foreColor;
     //displayBuffer[x][y].backColor = r->backColor;

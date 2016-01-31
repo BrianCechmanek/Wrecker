@@ -3,7 +3,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 
 LDFLAGS = -lBearLibTerminal
-CFLAGS = -std=gnu99 -g -Wall
+CFLAGS = -std=c99 -g -Wall
 
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
 HEADERS = $(wildcard $(SRC_DIR)/*.h)

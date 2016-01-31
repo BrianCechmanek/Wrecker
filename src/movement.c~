@@ -36,6 +36,6 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
 	position->x += velocity->dx * delta;
 	position->y += velocity->dy * delta;
 
-	//printf("%i move to (%f,%f)\n", entity, position->x, position->y);
+	printf("%i move to (%f,%f)\n", entity, position->x, position->y);
 }
 
