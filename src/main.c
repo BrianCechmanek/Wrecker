@@ -6,8 +6,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <Windows.h>
-
 #include "wrecker.h"
 #include "IO.h"
 #include "event.h"
