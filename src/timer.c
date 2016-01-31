@@ -13,6 +13,7 @@
 #define TIMER_PLATFORM_WINDOWS 0
 #define TIMER_PLATFORM_APPLE   0
 #define TIMER_PLATFORM_POSIX   0
+#define TIMER_PLATFORM_LINUX 0
 
 #if defined( _WIN32 ) || defined( _WIN64 )
 #  undef  TIMER_PLATFORM_WINDOWS
@@ -26,6 +27,10 @@
 #  include <string.h>
 static mach_timebase_info_data_t _timerlib_info;
 static void absolutetime_to_nanoseconds (uint64_t mach_time, uint64_t* clock ) { *clock = mach_time * _timerlib_info.numer / _timerlib_info.denom; }
+#elif defined( __linux__)
+#  undef  TIMER_PLATFORM_LINUX
+#  define TIMER_PLATFORM_LINUX 1
+#include <sys/time.h>
 #else
 #  undef  TIMER_PLATFORM_POSIX
 #  define TIMER_PLATFORM_POSIX 1
@@ -47,6 +52,11 @@ int timer_lib_initialize( void )
 		return -1;
 #elif TIMER_PLATFORM_APPLE
 	if( mach_timebase_info( &_timerlib_info ) )
+		return -1;
+	_timerlib_freq = 1000000000ULL;
+#elif TIMER_PLATFORM_LINUX
+	struct timeval t;
+	if (gettimeofday(&t, NULL);)
 		return -1;
 	_timerlib_freq = 1000000000ULL;
 #elif TIMER_PLATFORM_POSIX
@@ -81,6 +91,10 @@ tick_t timer_current( void )
 	absolutetime_to_nanoseconds( mach_absolute_time(), &curclock );
 	return curclock;
 
+#elif TIMER_PLATFORM_LINUX
+	struct timeval t;
+	gettimeofday(&t, NULL);
+	return ( (uint64_t)t.tv_sec * 1000000000ULL ) + t.tv_usec;
 #elif TIMER_PLATFORM_POSIX
 
 	struct timespec ts = { .tv_sec = 0, .tv_nsec = 0 };
@@ -119,6 +133,12 @@ tick_t timer_elapsed_ticks( const tick_t t )
 	absolutetime_to_nanoseconds( mach_absolute_time(), &curclock );
 	dt = curclock - t;
 
+#elif TIMER_PLATFORM_LINUX
+	tick_t curclock;
+	struct timeval ts;
+	gettimeofday(&ts, NULL);
+	curclock = ( (tick_t)ts.tv_sec * 1000000000ULL ) + ts.tv_usec;
+	dt = curclock - t;
 #elif TIMER_PLATFORM_POSIX
 
 	tick_t curclock;
@@ -163,7 +183,8 @@ tick_t timer_system( void )
 	tick_t curclock = 0;
 	absolutetime_to_nanoseconds( mach_absolute_time(), &curclock );
 	return ( curclock / 1000000ULL );
-
+#elif TIMER_PLATFORM_LINUX
+	return 0;
 #elif TIMER_PLATFORM_POSIX
 
 	struct timespec ts = { .tv_sec = 0, .tv_nsec = 0 };
