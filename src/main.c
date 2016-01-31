@@ -1,4 +1,4 @@
-/*   Wrecker V.03
+﻿/*   Wrecker V.03
  *   Main.c
  *   Thought we should eventually build a real game loop instead of
  *   hacking something together. Hopefully this is good enough for a while.
@@ -34,6 +34,8 @@ int main(void)
 	sprintf(stringbuffer, "window.title = 'Wrecker %d.%d.%d'", WRECKER_MAJOR_VERSION, WRECKER_MINOR_VERS, WRECKER_PATCH_VERS);
 
 	terminal_set(stringbuffer);
+
+	initDisplayBuffer();
 
     initWrecker();
 
@@ -72,6 +74,15 @@ int main(void)
 
 		//Update Game Elements
 		updateGame(deltaMs);
+
+		// Add the fps counter and frametime to the screen
+		char timebuffer[60];
+		char fpsbuffer[60];
+		sprintf(timebuffer, "%G ms", deltaMs);
+		unsigned fps = (unsigned)(1000.0 / deltaMs);
+		sprintf(fpsbuffer, "%d fps", fps);
+		terminal_print(1, 1, timebuffer);
+		terminal_print(1, 2, fpsbuffer);
 
 		// Draw game
 		render(deltaMs);

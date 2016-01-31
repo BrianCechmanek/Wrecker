@@ -92,7 +92,7 @@ void updateGame( double delta )
 void render(double delta)
 {
     //WRECK(processSystem, renderSystem, 0);
-    terminal_refresh();
+	terminal_refresh();
 }
 
 void handleInput( int code )

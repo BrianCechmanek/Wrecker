@@ -22,6 +22,7 @@ typedef struct velocity_c
 typedef struct Render_c
 {
     int code;
+	unsigned foreColor, backColor;
 } Render_c;
 
 typedef struct Model_c

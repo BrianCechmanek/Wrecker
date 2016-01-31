@@ -9,6 +9,6 @@
 
 static const unsigned int WRECKER_MAJOR_VERSION = 0;
 static const unsigned int WRECKER_MINOR_VERS = 0;
-static const unsigned int WRECKER_PATCH_VERS = 2;
+static const unsigned int WRECKER_PATCH_VERS = 3;
 
 #endif
