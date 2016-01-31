@@ -26,6 +26,10 @@ Suite 330, Boston, MA 02111-1307 USA.  */
 # define _GETOPT_H 1
 #endif
 
+#include "defines.h"
+
+#if __WINDOWS__
+
 /* If __GNU_LIBRARY__ is not already defined, either we are being used
 standalone, or this is the first header included in the source file.
 If we are being used with glibc, we need to include <features.h>, but
@@ -167,6 +171,7 @@ extern "C" {
 }
 #endif
 
+#endif
 /* Make sure we later can get all the definitions and declarations.  */
 #undef __need_getopt
 

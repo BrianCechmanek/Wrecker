@@ -6,6 +6,6 @@
 uint64_t getTicks(void);
 void initWrecker(void);
 void handleInput(int code);
-void updateGame(void);
+void updateGame(double);
 
 #endif

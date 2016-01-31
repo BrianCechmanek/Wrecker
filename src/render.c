@@ -14,24 +14,23 @@ sysID renderSystem;
 int initRenderSystem(void)
 {
     WRECK(createSystem, "render", NULL, p_Render, NULL, NULL, NULL, NULL,
-                         PASSIVE_SYSTEM, &renderSystem);
-    s_watchComponents( renderSystem, 2, Position,
-                                        Render);
+		DL_SYSTEM_FLAG_NORMAL, &renderSystem);
+    s_watchComponents( renderSystem, 2, PositionID,
+                                        RenderID);
 
     return 0;
 }
 
-void p_Render( struct diana *diana, void *ud, unsigned int e, float d)
+void p_Render(struct diana *diana, void *user_data, unsigned int entity, float delta)
 {
-    Render_c *r;
-    Position_c *p;
+	struct position_c *position;
+	Render_c *renderer;
 
-    int x, y;
-    r = getComponent(e, Render);
-    p = getComponent(e, Position);
+	diana_getComponent(diana, entity, PositionID, (void **)&position);
+	diana_getComponent(diana, entity, RenderID, (void **)&renderer);
 
-    x = p->x; y = p->y;
-    displayBuffer[x][y].code = r->code;
+	printf("%i rendered at (%f,%f,%c)\n", entity, position->x, position->y, renderer->code);
+    //displayBuffer[x][y].code = r->code;
     //displayBuffer[x][y].foreColor = r->foreColor;
     //displayBuffer[x][y].backColor = r->backColor;
 }
