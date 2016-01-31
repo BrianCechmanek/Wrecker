@@ -90,7 +90,7 @@ void render(void)
 void handleInput( int code )
 {
     if (code == TK_RESIZED){
-        _resizeWindow();
+        resizeWindow();
     }
     return;
 }

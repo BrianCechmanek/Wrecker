@@ -36,7 +36,7 @@ typedef struct Model_c
     int width;
 
     char **map;
-} Model_c;
+}
 
 extern componentID Position;
 extern componentID Velocity;

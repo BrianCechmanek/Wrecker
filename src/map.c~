@@ -73,7 +73,7 @@ int _getModelDimensions( FILE *fp, int *height, int *width)
         if (fp != NULL){
                 char buffer[120];
                 long pos = ftell(fp);
-                while ( fgets(buffer, 120, fp) != NULL ){
+                while ( fgets(buffer, 120, openedFile) != NULL ){
                     int len = strlen(buffer);
                     if (len > 0 && buffer[len - 1] == '\n'){
                         buffer[len-1] = '\0';
