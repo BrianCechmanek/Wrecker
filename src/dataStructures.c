@@ -61,8 +61,8 @@ void *removeNode( List *theList, Node *theNode)
         return NULL;
     }
     if( theList->count == 1 ){
-        theList->first == NULL;
-        theList->last == NULL;
+        theList->first = NULL;
+        theList->last = NULL;
     }
     else if ( theNode == theList->first ){
         theList->first = theNode->next;

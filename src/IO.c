@@ -14,7 +14,7 @@
 #include "systems.h"
 #include "dbg.h"
 
-#include <sys/time.h>
+//#include <sys/time.h>
 
 /*
  * Current function for pulling game time.
@@ -22,16 +22,16 @@
  */
 uint64_t getTicks(void)
 {
-    struct timeval t;
-    gettimeofday(&t, NULL);
-    return t.tv_sec*1000 + t.tv_usec/1000;
+    //struct timeval t;
+    //gettimeofday(&t, NULL);
+	return 150;//t.tv_sec*1000 + t.tv_usec/1000;
 }
 
 void initWreckState(void)
 {
     Wrecker = emalloc(sizeof(gameState));
     Wrecker->currentState = 1;
-    Wrecker->lastActual = getTicks();
+    //Wrecker->lastActual = getTicks();
     Wrecker->clock = 0;
     Wrecker->nextUpdate = 0;
     Wrecker->timeCurrent = 0;

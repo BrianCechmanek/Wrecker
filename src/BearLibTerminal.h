@@ -33,6 +33,8 @@
 #include <stdarg.h>
 #include <wchar.h>
 
+#include "defines.h"
+
 /*
  * Keyboard scancodes for events/states
  */
@@ -290,7 +292,11 @@ TERMINAL_API color_t color_from_name32(const int32_t* name);
 #if defined(__cplusplus)
 #define TERMINAL_INLINE inline
 #else
+#if __WINDOWS__
+#define TERMINAL_INLINE static __inline
+#else
 #define TERMINAL_INLINE static inline
+#endif
 #endif
 
 TERMINAL_INLINE int terminal_set(const char* value)

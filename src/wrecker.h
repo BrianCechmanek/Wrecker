@@ -1,13 +1,18 @@
 #ifndef _WRECKER_H
 #define _WRECKER_H
 
+#include "defines.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
-#include <unistd.h>
-
+#if __WINDOWS__
+	#include "wunistd.h"
+#else
+	#include <unistd.h>
+#endif
 #include "BearLibTerminal.h"
 #include "dbg.h"
 
