@@ -14,29 +14,28 @@ sysID movementSystem;
 
 int initMovementSystem(void)
 {
+	//diana_watch(wreckerD, movementSystem, PositionID);
+	//diana_watch(wreckerD, movementSystem, VelocityID);
+
     WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
-                         NORMAL_SYSTEM, &movementSystem);
-    s_watchComponents( movementSystem, 2, Position, 
-                                          Velocity );
+		DL_SYSTEM_FLAG_NORMAL, &movementSystem);
+    s_watchComponents( movementSystem, 2, PositionID, 
+                                          VelocityID );
 
     return 0;
 }
                                           
-void p_Movement( struct diana *diana, void *ud, entID e, float d)
+void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float delta)
 {
-    Position_c     *p;
-    Velocity_c    *v;
-//    int x0, y0;
+	Position_c *position;
+	Velocity_c *velocity;
 
-    p = getComponent( e, Position);
-    v = getComponent( e, Velocity);
+	diana_getComponent(diana, entity, PositionID, (void **)&position);
+	diana_getComponent(diana, entity, VelocityID, (void **)&velocity);
 
-//    x0 = p->x; y0 = p->y;
-    p->x += v->dx;
-    p->y += v->dy;
+	position->x += velocity->dx * delta;
+	position->y += velocity->dy * delta;
 
-    v->dx = 0;
-    v->dy = 0;
-    //sendEvent( eSys, "actorMoved", {x0, y0, p->x, p->y} ); 
+	//printf("%i move to (%f,%f)\n", entity, position->x, position->y);
 }
 

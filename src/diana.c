@@ -79,7 +79,7 @@ static int _sparseIntegerSet_contains(struct diana *diana, struct _sparseInteger
 
 static int _sparseIntegerSet_insert(struct diana *diana, struct _sparseIntegerSet *is, unsigned int i) {
 	if(i >= is->capacity) {
-		unsigned int newCapacity = (i + 1) * 1.5;
+		unsigned int newCapacity = (unsigned int)((i + 1) * 1.5);
 		_realloc(diana, is->dense, is->capacity * sizeof(unsigned int), newCapacity * sizeof(unsigned int), (void **)&is->dense);
 		_realloc(diana, is->sparse, is->capacity * sizeof(unsigned int), newCapacity * sizeof(unsigned int), (void **)&is->sparse);
 		is->capacity = newCapacity;
@@ -168,7 +168,7 @@ static int _denseIntegerSet_contains(struct diana *diana, struct _denseIntegerSe
 
 static unsigned int _denseIntegerSet_insert(struct diana *diana, struct _denseIntegerSet *is, unsigned int i) {
 	if(i >= is->capacity) {
-		unsigned int newCapacity = (i + 1) * 1.5;
+		unsigned int newCapacity = (unsigned int)((i + 1) * 1.5);
 		_realloc(diana, is->bytes, (is->capacity + 7) >> 3, (newCapacity + 7) >> 3, (void **)&is->bytes);
 		is->capacity = newCapacity;
 	}
@@ -354,7 +354,7 @@ static int _free(struct diana *diana, void *ptr) {
 	return DL_ERROR_NONE;
 }
 
-static int _strdup(struct diana *diana, const char *s, char ** r) {
+static int _dianastrdup(struct diana *diana, const char *s, char ** r) {
 	unsigned int l;
 	if(s == NULL) {
 		return DL_ERROR_NONE;
@@ -487,7 +487,7 @@ int diana_createComponent(
 	}
 
 	memset(&c, 0, sizeof(c));
-	err = _strdup(diana, name, (char **)&c.name);
+	err = _dianastrdup(diana, name, (char **)&c.name);
 	if(err != DL_ERROR_NONE) {
 		return err;
 	}
@@ -573,7 +573,7 @@ int diana_createSystem(
 	}
 
 	memset(&s, 0, sizeof(s));
-	err = _strdup(diana, name, (char **)&s.name);
+	err = _dianastrdup(diana, name, (char **)&s.name);
 	if(err != DL_ERROR_NONE) {
 		return err;
 	}
@@ -654,7 +654,7 @@ int diana_createManager(
 	}
 
 	memset(&m, 0, sizeof(m));
-	err = _strdup(diana, name, (char **)&m.name);
+	err = _dianastrdup(diana, name, (char **)&m.name);
 	if(err != DL_ERROR_NONE) {
 		return err;
 	}
@@ -732,7 +732,7 @@ static int _fixData(struct diana *diana) {
 		unsigned int newDataHeight = diana->dataHeight + diana->processingDataHeight, i;
 
 		if(newDataHeight >= diana->dataHeightCapacity) {
-			unsigned int newDataHeightCapacity = (newDataHeight + 1) * 1.5;
+			unsigned int newDataHeightCapacity = (unsigned int)((newDataHeight + 1) * 1.5);
 			int err = _realloc(diana, diana->data, diana->dataWidth * diana->dataHeightCapacity, diana->dataWidth * newDataHeightCapacity, (void **)&diana->data);
 			if(err != DL_ERROR_NONE) {
 				return err;
@@ -903,7 +903,7 @@ int diana_spawn(struct diana *diana, unsigned int * entity_ptr) {
 
 			diana->processingData[diana->processingDataHeight++] = entityData;
 		} else {
-			unsigned int newDataHeightCapacity = diana->dataHeight * 1.5;
+			unsigned int newDataHeightCapacity = (unsigned int)(diana->dataHeight * 1.5);
 			err = _realloc(diana, diana->data, diana->dataWidth * diana->dataHeightCapacity, diana->dataWidth * newDataHeightCapacity, (void **)&diana->data);
 			if(err != DL_ERROR_NONE) {
 				return err;

@@ -4,7 +4,7 @@
 
 #include "components.h"
 
-componentID Position;
-componentID Velocity;
-componentID Render;
-componentID Model;
+componentID PositionID;
+componentID VelocityID;
+componentID RenderID;
+componentID ModelID;
