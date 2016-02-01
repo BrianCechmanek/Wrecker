@@ -41,7 +41,7 @@ Model_c *loadModel( char *filename )
     fgets( buffer, 120, openedFile ); // Skip line.
     
     int height = 0; int width = 0;
-    if ( _getModelDimensions( openedFile, &height, &width ) == 0 ){
+    if ( _modelGetDimensions( openedFile, &height, &width ) == 0 ){
             sentinel(" Error loading ship model: %s", filename);
     }
     check( height < 500, "ERROR: .txt file %s has too many lines!", filename );
@@ -67,7 +67,7 @@ error:
     return NULL;
 }
 
-int _getModelDimensions( FILE *fp, int *height, int *width)
+int _modelGetDimensions( FILE *fp, int *height, int *width)
 {
         if (fp != NULL){
                 char buffer[120];
@@ -88,3 +88,34 @@ int _getModelDimensions( FILE *fp, int *height, int *width)
 }
 
 //Convert Model to Map.
+Map_c *buildMap_model( Model_c *model ){
+    
+    check(model, "Error loading model.");
+    Map_c *newMap = emalloc(sizeof(Map_c));
+
+    newMap->owner = 0;
+    newMap->height = model->height; newMap->width = model->width;
+
+    newMap->map = emalloc(newMap->height * sizeof( Tile ));
+    newMap->map[0] = emalloc(height * width * sizeof(int));
+    for ( int i = 0; i < height; i++){
+            newMap->map[i] = newMap->map[0] + i * width;
+    }
+    for  (int j = 0; j < height; j++){
+        bool terminatorFound = false;
+        for (int i = 0; i < width; i++){
+            if (terminatorFound){
+                newMap->map[i][j] = buildTile('\0');
+                continue;
+            }
+            char c = model->map[i][j];
+            if( c == '\0' ){
+                terminatorFound = true;
+            }
+            newMap->map[i][j] = buildTile( c );
+        }
+    }
+    return newMap;
+error:
+    return NULL;
+}

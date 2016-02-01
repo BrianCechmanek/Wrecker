@@ -4,10 +4,12 @@ Graphics
 
 Pathfinding
 Field of view
+
 Map Representation
     Map as tiles?
     Chunks?
     Display buffer?
+
 Input System
 Map Generation
 Terrain (destructible terrain seems doable)

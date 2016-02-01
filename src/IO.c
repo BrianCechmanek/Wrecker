@@ -41,15 +41,14 @@ void initWreckState(void)
 }
 
 // Reworked; assigns extra initial memory to speed up resizing.
+// TODO: Rework to be more flexible
 void initDisplayBuffer(void)
 {
-    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * sizeof(*displayBuffer));
-    for( i = 0; i < DBUFF_MEM_HEIGHT; i++){
-        displayBuffer[i] = emalloc( DBUFF_MEM_WIDTH* sizeof(**displayBuffer));
-        memset(displayBuffer[i], 0, sizeof(**displayBuffer) * DBUFF_MEM_WIDTH);
-    }
+    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(*displayBuffer));
+    memset(displayBuffer[i], 0, sizeof(displayBuffer) * DBUFF_MEM_WIDTH * DBUFF_MEM_HEIGHT);
 }
 
+//TODO  Resize window memory?
 void _resizeWindow(void)
 {
    int newWidth  =  terminal_state(TK_WIDTH);
@@ -57,7 +56,8 @@ void _resizeWindow(void)
 
     Wrecker->screenWidth  = newWidth;
     Wrecker->screenHeight = newHeight;
-    //redrawScreen();
+    //clearScreen();
+    //redrawScreen(); ? Maybe just use clearScreen to mark new tiles for draw.
 }
          
 void initEventSys(){
@@ -72,6 +72,7 @@ void initEventSys(){
 void initWrecker()
 {
     initWreckState();
+    initDisplayBuffer();
     initEventSys();
     initECS();
 }

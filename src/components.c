@@ -8,3 +8,4 @@ componentID Position;
 componentID Velocity;
 componentID Render;
 componentID Model;
+componentID Map;

@@ -38,9 +38,18 @@ typedef struct Model_c
     char **map;
 }
 
+typedef struct Map_c
+{
+    entID owner;
+    int height;
+    int width;
+    mapTile *map;
+}
+
 extern componentID Position;
 extern componentID Velocity;
 extern componentID Render;
 extern componentID Model;
+extern componentID Map_c;
 
 #endif

@@ -32,6 +32,7 @@ void _registerComponents(void)
     _buildComponent( "Render", sizeof(Render_c), &Render);
     _buildComponent( "Velocity", sizeof(Velocity_c), &Velocity);
     _buildComponent( "Model", sizeof(Model_c), &Model);
+    _buildComponent( "Map", sizeof(Map_c), &Map);
 
     log_info("Components Loaded.");
     return;

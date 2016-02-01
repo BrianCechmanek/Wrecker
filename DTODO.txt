@@ -1,8 +1,38 @@
-Main.c
-    Initialize / Resize Display buffer.
+DAVID'S TODO
 
-IO.c 
-    resize window
+Create function to process entities in chunks.
+process local entities
 
-map.c
-    build Map_c out of Tile components.
+    
+Map Representation:
+    Space Tile/Ship Tile different? 
+    How to handle map memory (or things you've seen before but cant see anymore)
+
+    spaceTile chunks 
+        flags
+
+    mapTile
+        tileLayers tileType[3]
+        flags
+        cellDisplayBuffer rememeberedAppearance;
+
+SHIP
+NAME
+ONBOARD
+WEAPONS
+MACHINES
+MAP
+
+
+MAP MEMORY:
+    We're going 1D array baby, LIVE WITH IT. MAKE IT YOUR HOME. 
+    2D is slower and harder to clean up!
+    ex: int *array = malloc( height * width * sizeof(int));
+        array[i * width + j];
+        #define ARR( a, i , j) ((a)[(i) * width + (j)]);
+
+MapChunk:
+    
+    entities:
+        
+
