@@ -20,10 +20,12 @@ int _getModelDimensions( FILE *fp, int *height, int *width);
  * For reading pre-built ships/sections.
  */
 // This probably belongs in IO but is only used for map functions right now.
+/*
 Model_c *loadModel( char *filename )
 {
     FILE *openedFile;
     char buffer[120];
+    char lineBuffer[120];
 
     if ( (openedFile = fopen(filename, "r")) == NULL ) {
         sentinel("Failure to load file: %s", filename);
@@ -72,7 +74,7 @@ int _modelGetDimensions( FILE *fp, int *height, int *width)
         if (fp != NULL){
                 char buffer[120];
                 long pos = ftell(fp);
-                while ( fgets(buffer, 120, openedFile) != NULL ){
+                while ( fgets(buffer, 120, fp) != NULL ){
                     int len = strlen(buffer);
                     if (len > 0 && buffer[len - 1] == '\n'){
                         buffer[len-1] = '\0';
@@ -119,3 +121,4 @@ Map_c *buildMap_model( Model_c *model ){
 error:
     return NULL;
 }
+*/

@@ -28,11 +28,11 @@ error:
 
 void _registerComponents(void)
 {
-    _buildComponent( "Position", sizeof(Position_c), &Position);
-    _buildComponent( "Render", sizeof(Render_c), &Render);
-    _buildComponent( "Velocity", sizeof(Velocity_c), &Velocity);
-    _buildComponent( "Model", sizeof(Model_c), &Model);
-    _buildComponent( "Map", sizeof(Map_c), &Map);
+    _buildComponent( "Position", sizeof(Position_c), &PositionID);
+    _buildComponent( "Render", sizeof(Render_c), &RenderID);
+    _buildComponent( "Velocity", sizeof(Velocity_c), &VelocityID);
+    _buildComponent( "Model", sizeof(Model_c), &ModelID);
+    _buildComponent( "Map", sizeof(Map_c), &MapID);
 
     log_info("Components Loaded.");
     return;

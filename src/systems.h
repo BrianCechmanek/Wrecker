@@ -15,7 +15,7 @@ void p_Movement( struct diana *diana, void *ud, entID e, float d);
 
 int initRenderSystem(void);
 void p_Render(struct diana *diana, void *ud, entID e, float d);
-void render(void);
+void render(double);
 
 extern sysID renderSystem;
 extern sysID movementSystem;

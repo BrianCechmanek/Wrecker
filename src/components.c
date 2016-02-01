@@ -4,8 +4,8 @@
 
 #include "components.h"
 
-componentID Position;
-componentID Velocity;
-componentID Render;
-componentID Model;
-componentID Map;
+omponentID PositionID;
+componentID VelocityID;
+componentID RenderID;
+componentID ModelID;
+componentID MapID;

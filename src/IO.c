@@ -5,7 +5,7 @@
  */
 
 #include "IO.h"
-
+#include "defines.h"
 #include "wrecker.h"
 #include "event.h"
 #include "diana.h"
@@ -14,17 +14,25 @@
 #include "systems.h"
 #include "dbg.h"
 
+#if __WINDOWS__
+#include <time.h>
+#else
 #include <sys/time.h>
-
+#endif
 /*
  * Current function for pulling game time.
  * It's probably bad for some reason.
  */
 uint64_t getTicks(void)
 {
+#if __WINDOWS__
+
+#else
     struct timeval t;
     gettimeofday(&t, NULL);
-    return t.tv_sec*1000 + t.tv_usec/1000;
+	return t.tv_sec*1000 + t.tv_usec/1000;
+#endif
+	return 16;
 }
 
 void initWreckState(void)
@@ -77,21 +85,21 @@ void initWrecker()
     initECS();
 }
 
-void updateGame( void )
+void updateGame( double delta )
 {
-    WRECK( process, 0 );
+    WRECK( process, delta );
 }
 
-void render(void)
+void render(double delta)
 {
-    WRECK(processSystem, renderSystem, 0);
-    terminal_refresh();
+    //WRECK(processSystem, renderSystem, 0);
+	terminal_refresh();
 }
 
 void handleInput( int code )
 {
     if (code == TK_RESIZED){
-        resizeWindow();
+        _resizeWindow();
     }
     return;
 }

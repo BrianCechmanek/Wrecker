@@ -9,24 +9,20 @@
 #include "wrecker.h"
 #include "BearLibTerminal.h"
 
-typedef struct Position_c
+typedef struct position_c 
 {
-    int x;
-    int y;
+	float x, y;
 } Position_c;
 
-typedef struct Velocity_c
+typedef struct velocity_c
 {
-    int dx;
-    int dy;
-    int max;
+    int dx, dy, max;
 } Velocity_c;
 
 typedef struct Render_c
 {
     int code;
-    color_t *foreColor;
-    color_t *backColor;
+	unsigned foreColor, backColor;
 } Render_c;
 
 typedef struct Model_c
@@ -36,7 +32,7 @@ typedef struct Model_c
     int width;
 
     char **map;
-}
+} Model_c;
 
 typedef struct Map_c
 {
@@ -46,10 +42,9 @@ typedef struct Map_c
     mapTile *map;
 }
 
-extern componentID Position;
-extern componentID Velocity;
-extern componentID Render;
-extern componentID Model;
-extern componentID Map_c;
-
+extern componentID PositionID;
+extern componentID VelocityID;
+extern componentID RenderID;
+extern componentID ModelID;
+extern componentID MapID;
 #endif
