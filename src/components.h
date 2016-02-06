@@ -39,8 +39,8 @@ typedef struct Map_c
     entID owner;
     int height;
     int width;
-    mapTile *map;
-}
+    Tile *map;
+} Map_c;
 
 extern componentID PositionID;
 extern componentID VelocityID;

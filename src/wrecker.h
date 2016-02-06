@@ -54,12 +54,6 @@ typedef struct gameState
     int screenWidth;
 } gameState;
 
-typedef struct mapTile
-{
-    int tiletype[3];
-    unsigned long flags;
-    cellDisplayBuffer rememberedAppearance;
-
 /*
  *  Globals
  */

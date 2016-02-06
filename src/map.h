@@ -17,7 +17,7 @@ typedef struct Tile
 {
     unsigned short tileLayer[3]; // Made up of tileTypes.
     unsigned long tileFlags;
-    short volume;       //For tracking oxygen levels
+    short volume;       //For tracking oxygen levels 
 } Tile;
 
 enum tile_flagList

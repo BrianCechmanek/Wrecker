@@ -52,8 +52,11 @@ void initWreckState(void)
 // TODO: Rework to be more flexible
 void initDisplayBuffer(void)
 {
-    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(*displayBuffer));
-    memset(displayBuffer[i], 0, sizeof(displayBuffer) * DBUFF_MEM_WIDTH * DBUFF_MEM_HEIGHT);
+    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * sizeof(*displayBuffer));
+    displayBuffer[0] = emalloc( DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(  displayBuffer ));
+    for (int i = 1; i < DBUFF_MEM_HEIGHT; i++){
+        displayBuffer[i] = displayBuffer[0] + i * DBUFF_MEM_WIDTH;
+    }
 }
 
 //TODO  Resize window memory?
