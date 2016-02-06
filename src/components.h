@@ -8,6 +8,7 @@
 
 #include "wrecker.h"
 #include "BearLibTerminal.h"
+#include "random.h"
 
 typedef struct position_c 
 {
@@ -42,9 +43,17 @@ typedef struct Map_c
     Tile *map;
 } Map_c;
 
+typedef void *RNG;
+typedef struct RNG_c
+{
+    RNG instance;
+} RNG_c;
+
 extern componentID PositionID;
 extern componentID VelocityID;
 extern componentID RenderID;
 extern componentID ModelID;
 extern componentID MapID;
+extern componentID RNGID;
+
 #endif

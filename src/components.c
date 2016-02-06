@@ -9,3 +9,4 @@ componentID VelocityID;
 componentID RenderID;
 componentID ModelID;
 componentID MapID;
+componentID RNGID;

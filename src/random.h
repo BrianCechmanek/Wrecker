@@ -4,12 +4,12 @@
 #include <stdint.h>
 
 typedef void *RNG;
-
+/*
 typedef struct RNG_c
 {
     RNG instance;
 } RNG_c;
-
+*/
 typedef enum {
     DISTRIBUTION_LINEAR,
     DISTRIBUTION_GAUSSIAN,
@@ -38,6 +38,7 @@ typedef struct mersenneData_t{
 RNG     new_RNG( uint64_t seed );
 int     rand_int(RNG instance, int min, int max);
 float   rand_float(RNG instance, float min, float max);
+double  rand_double(RNG instance, double min, double max);
 void    delete_RNG( RNG instance );
 
 /*
