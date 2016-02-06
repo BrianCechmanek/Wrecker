@@ -54,9 +54,10 @@ uint64_t mt_rand( mersenneData_t *d )
 }
 
 /* Generates a float between 0, 1 */
+    //return (float)mt_rand( r ) * rand_div;
 static float random_f01( mersenneData_t *r)
 {
-    return (float)mt_rand( r ) * rand_div;
+    return (mt_rand( r ) >> 11) * (1.0 / 9007199254740991.0);
 }
 
 RNG  new_RNG( uint64_t seed )
@@ -97,12 +98,27 @@ float rand_float(RNG instance, float min, float max)
     }
     r = (mersenneData_t *) instance;
     delta = max - min ;
-    f = delta * random_f01( r );
+    f = delta * (float) random_f01( r );
 
     return min + f;
 }
 
-//TODO: ADD RANDOM DOUBLE
+double rand_double(RNG instance, double min, double max)
+{
+    mersenneData_t *r;
+    double delta, f;
+    if (max == min) return min;
+    else if (max < min) {
+        double tmp = max;
+        max = min;
+        min = tmp;
+    }
+    r = (mersenneData_t *) instance;
+    delta = max - min ;
+    f = delta * (double)random_f01( r );
+
+    return min + f;
+}
 
 void delete_RNG( RNG instance )
 {
@@ -165,21 +181,30 @@ int rand_rollDice_s(RNG instance, char *s )
     Dice d = new_rand_dice(s);
     return rand_rollDice( instance, &d );
 }
-
 /*
 int main(void)
 {
-    RNG myRNG = new_RNG(123456789);
+    RNG myRNG = new_RNG(987654321);
     int a;
-    float b;
+    float b, f;
     uint64_t c;
+    double d;
 
     c = mt_rand( (mersenneData_t*)myRNG );
     a = rand_int( myRNG, 1, 10);
-    b = rand_float( myRNG, 1.0, 10.0);
+    b = rand_float( myRNG, 1.0f, 10.0f);
+    d = rand_double( myRNG, 1.0, 10.0);
+    f = random_f01( (mersenneData_t*)myRNG );
 
-    printf("A = %d\nB = %f\nC = %" PRIu64 "\n", a, b, c);
+    printf("A = %d\nB = %f\nC = %" PRIu64 "\nD = %lf \nF = %f\n", a, b, c, d, f);
     delete_RNG(myRNG);
+    
+    printf("Ten ints");
+    for (int i = 0; i < 10; i++) printf(" %d", rand_int( myRNG, 1, 100) );
+    printf("\nTen Doubles");
+    for (int i = 0; i < 10; i++) printf(" %lf", rand_double( myRNG, 1.0, 5.0) );
+    printf("\nTen Floats");
+    for (int i = 0; i < 10; i++) printf(" %f", rand_double( myRNG, 1.0, 2.0) );
 
     return 0;
 }
