@@ -45,7 +45,7 @@ void    delete_RNG( RNG instance );
  * Should work with input like "2 * 3d6 + 5"
  */
 
-Dice    new_rand_dice( const char *s );
-int     rand_rollDice( RNG *instance, Dice *d);
-int     rand_rollDice_s(RNG *instance; const char *s );
+Dice    new_rand_dice( char *s );
+int     rand_rollDice( RNG instance, Dice *d);
+int     rand_rollDice_s(RNG instance, char *s );
 #endif

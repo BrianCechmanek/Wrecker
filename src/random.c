@@ -1,7 +1,10 @@
 #include "random.h"
+
 #include <stdlib.h>
+#include <inttypes.h>
 #include <string.h>
 #include <math.h>
+#include "dbg.h"
 
 #define HIGH_BITS 0xFFFFFFFF80000000ULL
 #define LOW_BITS 0x7FFFFFFFULL
@@ -19,7 +22,7 @@ void twisterInit( uint64_t seed, mersenneData_t *d )
     }
 }
 
-uint64_t mt_rand( mersenneData_t d )
+uint64_t mt_rand( mersenneData_t *d )
 {
     int i;
     uint64_t x;
@@ -27,14 +30,14 @@ uint64_t mt_rand( mersenneData_t d )
 
     if ( d->mti = 312 ){
         for (i = 0; i < 312 - MM; i++) {
-            x = (d->mt[i]&HIGH_BITS) | ( MT[i+1] & LOW_BITS );
+            x = (d->mt[i]&HIGH_BITS) | ( d->mt[i+1] & LOW_BITS );
             d->mt[i] = d->mt[i+ MM] ^ ( x >> 1) ^ mag01[(int)(x&1ULL)];
         }
         for(;i < 312 - 1; i++){
-            x = (d->mt[i] & HIGH_BITS) | (d->mt[i+1]& LOW+BITS);
+            x = (d->mt[i] & HIGH_BITS) | (d->mt[i+1] & LOW_BITS);
             d->mt[i] = d->mt[i+(MM - 312)] ^ (x>>1) ^ mag01[(int)(x&1ULL)];
         }
-        x = (d->mt[312 - 1 ] & HIGH_BITS) | (d->mt[0]&LOW_BITS);
+        x = (d->mt[312 - 1 ] & HIGH_BITS) | (d->mt[0] & LOW_BITS);
         d->mt[312 - 1] = d->mt[MM - 1] ^ (x>>1) ^ mag01[(int)(x & 1ULL) ] ;
 
         d->mti = 0;
@@ -76,13 +79,13 @@ int rand_int(RNG instance, int min, int max){
         max = min;
         min = tmp;
     }
-    r = (mersenne_data_t *) instance;
+    r = (mersenneData_t *) instance;
     delta = max - min + 1;
 
     return (mt_rand( r ) % delta) + min;
 }
 
-float rand_float(RNG gen, float min, float max)
+float rand_float(RNG instance, float min, float max)
 {
     mersenneData_t *r;
     float delta, f;
@@ -92,7 +95,7 @@ float rand_float(RNG gen, float min, float max)
         max = min;
         min = tmp;
     }
-    r = (mersenne_data_t *) gen;
+    r = (mersenneData_t *) instance;
     delta = max - min ;
     f = delta * random_f01( r );
 
@@ -110,14 +113,14 @@ void delete_RNG( RNG instance )
     free(instance);
 }
 
-Dice new_rand_dice( const char *s )
+Dice new_rand_dice( char *s )
 {
     Dice d = {1, 1, 1.0f, 0.0f };
     char * p = s;
     char tmp[128];
     size_t l;
     // Get Multiplier
-    if ( l = strcspn(p, "*x")) < strlen(ptr) {
+    if ( l = strcspn(p, "*x") < strlen(p)) {
         strcpy(tmp, p);
         tmp[l] = '\0';
         d.multiplier = atof(tmp);
@@ -147,18 +150,37 @@ Dice new_rand_dice( const char *s )
     return d;
 }
 
-int rand_rollDice( RNG *instance, Dice *d) 
+int rand_rollDice( RNG instance, Dice *d) 
 {
     int rolls;
     int result = 0;
     for( rolls = 0; rolls < d->numRolls; rolls++){
-        result += rand_int( *instance, 1, d->numFaces);
+        result += rand_int( instance, 1, d->numFaces);
     }
     return (int) (result + d->addsub) * d->multiplier;
 }
 
-int rand_rollDice_s(RNG *instance; const char *s )
+int rand_rollDice_s(RNG instance, char *s )
 {
     Dice d = new_rand_dice(s);
-    return rand_rollDice( instance, new_rand_dice(s) );
+    return rand_rollDice( instance, &d );
 }
+
+/*
+int main(void)
+{
+    RNG myRNG = new_RNG(123456789);
+    int a;
+    float b;
+    uint64_t c;
+
+    c = mt_rand( (mersenneData_t*)myRNG );
+    a = rand_int( myRNG, 1, 10);
+    b = rand_float( myRNG, 1.0, 10.0);
+
+    printf("A = %d\nB = %f\nC = %" PRIu64 "\n", a, b, c);
+    delete_RNG(myRNG);
+
+    return 0;
+}
+*/
