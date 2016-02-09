@@ -27,6 +27,12 @@
 
 #define check_debug(A, M, ...) if(!(A)) { debug(M, ##__VA_ARGS__); errno=0; goto error; }
 
-void *emalloc(size_t size);
+#define emalloc( S ) do { void *p; p = malloc(size); \
+                     if (!p){fprintf(stderr, "Memory allocation error. FILE: %s LINE: %d\n", \
+                                     __FILE__, __LINE__); exit(1);} return p; } while (0)
+#define run_test(test) do { char *message = test();  tests_run++; \
+                            if (message) return message; } while 0}
+extern int tests_run;
 
+#define 
 #endif

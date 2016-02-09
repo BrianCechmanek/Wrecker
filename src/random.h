@@ -31,6 +31,7 @@ typedef struct mersenneData_t{
 
 /*
  * RNG Init
+ * RNG instance = new_RNG( seed );
  * Random Ints/float within range.
  * RNG destructor
  */
