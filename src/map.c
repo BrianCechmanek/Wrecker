@@ -12,8 +12,17 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define E_LIST_MAX 100
+
+typedef struct ent_list
+{
+    EID ents[E_LIST_MAX];
+    short num;
+}ent_list;
+
 Model_c *loadModel( char *filename );
 int _getModelDimensions( FILE *fp, int *height, int *width);
+
 
 /*
  * Loads .txt file into a Model_c struct.
@@ -122,3 +131,62 @@ error:
     return NULL;
 }
 */
+
+
+ent_list entitiesAt( map_c *map, int xLoc, int yLoc)
+{
+    ent_list list = {0};
+    Position_c *pos;
+
+    check( map->map, "NULL Map passed to entitiesAt()." );
+    check ( xLoc >= 0 && yLoc >=0 && xLoc <= map->width && yLoc <= map->height,
+            "Coordinates lookup outside Bounds");
+    
+    for (int i = 0; i < map->eCount; i++){
+        WRECK(getComponent( map->entList[i], PositionID, (void **) &pos));
+        if( (int) pos->x == xLoc && pos->y == yLoc ){
+            check( list.num < E_LIST_MAX, 
+                   "Too many entities for entity lookup at X: %d Y: %d", xLoc, yLoc );
+            list.ents[list.num++] = map->entList[i];
+        }
+    }
+    return list;
+
+error:
+    return list;
+}
+        
+void append_entities(ent_list in, ent_list *out)
+{
+    if( !in.num ) return;
+
+    check( in.num + out->num <= 100, "ent_list overflow, too many ents in list.");
+
+    for(int i = 0; i < in.num; i++){
+        out->ents[num++] = in.ents[i];
+    }
+
+    return;
+
+error:
+    return;
+}
+
+ent_list getSurroundingEntities (map_c *map, int xLoc, int yLoc )
+{
+    ent_list list;
+    list.num = 0;
+
+    for (int i = xLoc - 1; i <= xLoc + 1; i++){
+        for (int j = yLoc - 1; j <= yLoc + 1; j++){
+            // Bounds Check
+            if ( i < 0 || j < 0 || i > map->width || j > map->height) {
+                continue;
+            }
+            if( i == xLoc && j == yLoc ) continue; // Skip Occupied Tile (might not need)
+            append_entities( entitiesAt( i, j ), &list);
+        }
+    }
+
+    return list;
+}
