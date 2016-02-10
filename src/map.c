@@ -190,3 +190,16 @@ ent_list getSurroundingEntities (map_c *map, int xLoc, int yLoc )
 
     return list;
 }
+
+/*
+//TODO: Add entity type lookup for error handling
+bool addToEntList( eID entity, ent_list *list)
+{
+    check( list, "Null ent_list passed for addToEntList()")
+    check(list->num <= E_LIST_MAX, "Warning: ent_list full");
+
+    }
+
+
+error:
+*/
