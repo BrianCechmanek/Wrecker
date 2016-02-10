@@ -155,7 +155,20 @@ ent_list entitiesAt( map_c *map, int xLoc, int yLoc)
 error:
     return list;
 }
-        
+
+//TODO: Add entity type lookup for error handling
+bool addToEntList( eID entity, ent_list *list)
+{
+    check( list, "Null ent_list passed for addToEntList()")
+    check(list->num < E_LIST_MAX, "ERROR: Adding to FULL ent_list.");
+
+    list->ents[ list-> num++ ] = entity;
+    return true;
+
+error:
+    return false;
+}
+
 void append_entities(ent_list in, ent_list *out)
 {
     if( !in.num ) return;
@@ -163,7 +176,7 @@ void append_entities(ent_list in, ent_list *out)
     check( in.num + out->num <= 100, "ent_list overflow, too many ents in list.");
 
     for(int i = 0; i < in.num; i++){
-        out->ents[num++] = in.ents[i];
+        addToEntList( in.ents[i], out);
     }
 
     return;
@@ -191,15 +204,4 @@ ent_list getSurroundingEntities (map_c *map, int xLoc, int yLoc )
     return list;
 }
 
-/*
-//TODO: Add entity type lookup for error handling
-bool addToEntList( eID entity, ent_list *list)
-{
-    check( list, "Null ent_list passed for addToEntList()")
-    check(list->num <= E_LIST_MAX, "Warning: ent_list full");
 
-    }
-
-
-error:
-*/
