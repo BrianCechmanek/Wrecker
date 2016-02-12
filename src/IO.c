@@ -107,4 +107,13 @@ void handleInput( int code )
     return;
 }
 
-
+void *emalloc(size_t size )
+{
+    void *p;
+    p = malloc( size );
+    if (!p){
+        fprintf(stderr, "Memory allocation error. FILE: %s LINE: %d\n", __FILE__, __LINE__); 
+        exit(1); 
+    }
+    return p; 
+}

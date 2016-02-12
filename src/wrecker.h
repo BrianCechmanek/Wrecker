@@ -18,6 +18,7 @@
 
 #include "map.h"
 #include "event.h"
+#include "diana.h"
 
 #define DBUFF_MEM_WIDTH 200
 #define DBUFF_MEM_HEIGHT 60

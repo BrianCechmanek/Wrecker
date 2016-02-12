@@ -5,6 +5,8 @@
  *  map.h
  */
 
+#include "wrecker.h"
+
 #define Fl(N)   (1 << (N))
 
 enum tile_type{

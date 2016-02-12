@@ -9,6 +9,7 @@
 #include "ECS.h"
 #include "wrecker.h"
 #include "components.h"
+#include "map.h"
 
 sysID movementSystem;
 
@@ -42,8 +43,8 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
     if (position->x < 0 || position->x >= position->map->width ||
         position->y < 0 || position->y >=  position->map->height) {
 
-        Position_c parentPos;
-        EID parent = position->map->parent;
+        Position_c *parentPos;
+        entID parent = position->map->parent;
 
         WRECK(getComponent, parent, PositionID, (void **)&parentPos);
         position->x += parentPos->x;
@@ -61,27 +62,27 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
  *          Then we run this function and determine he is now within the bounds of ship B.
  */ 
 
-void checkForMap( Position_c *position, EID sector )
+void checkForMap( Position_c *position, entID sector )
 {
     /* Poll list of entities with maps in sector.
      * Is new Position within bounds of a map?
      * calculate offset for new map coordinates
      * Update map info.
      */
-     Position_c *parentPos;
-     eType      *type; 
-     ent_list   *list;
+     Position_c     *parentPos;
+     eType_c        *type; 
+     ent_list_c     *eList;
 
 
-     WRECK(getComponent, sector, entityListID, (void **)&parentPos);
+     WRECK(getComponent, sector, ent_listID, (void **)&parentPos);
      check(parentPos, "Unable to load entity list for entity: %d", sector);
 
-     for (int i = 0; i < list->num; i++){
+     for (int i = 0; i < eList->num; i++){
 
-        WRECK(getComponent, list->ents[i], TypeID, (void **)&type);
-        if (type->map == true){
+        WRECK(getComponent, eList->ents[i], eTypeID, (void **)&type);
+        if (type->has_map == true){
 
-            WRECK(getComponent, list-ents[i], PositionID, (void **)&parentPos);
+            WRECK(getComponent, eList->ents[i], PositionID, (void **)&parentPos);
             int xMax = parentPos->x + parentPos->map->width;
             int yMax = parentPos->y + parentPos->map->height;
 

@@ -10,20 +10,28 @@
 #include "BearLibTerminal.h"
 #include "random.h"
 
+#define E_LIST_MAX 100 // TEMPORARY: TODO:REWORK TO BE EXMAPDNING BUFFER
+
+typedef struct ent_list_c
+{
+    entID ents[E_LIST_MAX];
+    short num;
+}ent_list_c;
+
 typedef struct eType_c
 {
-    enum entityType t;
+    short type;
     bool has_map;
     bool active;
-};
+}eType_c;
 
 typedef struct Map_c
 {
-    EID parent;
+    entID parent;
     char *title;
     int height;
     int width;
-    Tile *map;
+    Cell *map;
 } Map_c;
 
 typedef struct position_c 
@@ -66,5 +74,6 @@ extern componentID RenderID;
 extern componentID ModelID;
 extern componentID MapID;
 extern componentID RNGID;
+extern componentID ent_listID;
 
 #endif

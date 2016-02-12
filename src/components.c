@@ -4,10 +4,11 @@
 
 #include "components.h"
 
-componentID eTypeID
+componentID eTypeID;
 componentID PositionID;
 componentID VelocityID;
 componentID RenderID;
 componentID ModelID;
 componentID MapID;
 componentID RNGID;
+componentID ent_listID;

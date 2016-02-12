@@ -5,6 +5,7 @@
  */
 
 #include "map.h"
+#include "diana.h"
 #include "dbg.h"
 #include "components.h"
 
@@ -15,11 +16,6 @@
 #define E_LIST_MAX 100
 
 //TODO: Rework into a resizing buffered list.
-typedef struct ent_list
-{
-    EID ents[E_LIST_MAX];
-    short num;
-}ent_list;
 
 Model_c *loadModel( char *filename );
 int _getModelDimensions( FILE *fp, int *height, int *width);
@@ -134,21 +130,25 @@ error:
 */
 
 
-ent_list entitiesAt( map_c *map, int xLoc, int yLoc)
+ent_list_c entitiesAt( Map_c *map, int xLoc, int yLoc)
 {
-    ent_list list = {0};
+    ent_list_c list = {0};
+    ent_list_c *parentList;
     Position_c *pos;
 
     check( map->map, "NULL Map passed to entitiesAt()." );
     check ( xLoc >= 0 && yLoc >=0 && xLoc <= map->width && yLoc <= map->height,
             "Coordinates lookup outside Bounds");
+
     
-    for (int i = 0; i < map->eCount; i++){
-        WRECK(getComponent( map->entList[i], PositionID, (void **) &pos));
+    WRECK(getComponent, map->parent, ent_listID, (void **) parentList);
+    
+    for (int i = 0; i < parentList->num; i++){
+        WRECK(getComponent, parentList->ents[i], PositionID, (void **) &pos);
         if( (int) pos->x == xLoc && pos->y == yLoc ){
             check( list.num < E_LIST_MAX, 
                    "Too many entities for entity lookup at X: %d Y: %d", xLoc, yLoc );
-            list.ents[list.num++] = map->entList[i];
+            list.ents[list.num++] = parentList->ents[i];
         }
     }
     return list;
@@ -158,7 +158,7 @@ error:
 }
 
 //TODO: Add entity type lookup for error handling
-bool addToEntList( eID entity, ent_list *list)
+bool addToEntList( entID entity, ent_list_c *list)
 {
     check( list, "Null ent_list passed for addToEntList()")
     check(list->num < E_LIST_MAX, "ERROR: Adding to FULL ent_list.");
@@ -170,7 +170,7 @@ error:
     return false;
 }
 
-void append_entities(ent_list in, ent_list *out)
+void append_entities(ent_list_c in, ent_list_c *out)
 {
     if( !in.num ) return;
 
@@ -186,9 +186,9 @@ error:
     return;
 }
 
-ent_list getSurroundingEntities (map_c *map, int xLoc, int yLoc )
+ent_list_c getSurroundingEntities (Map_c *map, int xLoc, int yLoc )
 {
-    ent_list list;
+    ent_list_c list;
     list.num = 0;
 
     for (int i = xLoc - 1; i <= xLoc + 1; i++){
@@ -198,7 +198,7 @@ ent_list getSurroundingEntities (map_c *map, int xLoc, int yLoc )
                 continue;
             }
             if( i == xLoc && j == yLoc ) continue; // Skip Occupied Tile (might not need)
-            append_entities( entitiesAt( i, j ), &list);
+            append_entities( entitiesAt(map, i, j ), &list);
         }
     }
 
