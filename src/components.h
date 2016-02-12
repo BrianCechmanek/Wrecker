@@ -10,9 +10,19 @@
 #include "BearLibTerminal.h"
 #include "random.h"
 
+typedef struct Map_c
+{
+    EID parent;
+    char *title;
+    int height;
+    int width;
+    Tile *map;
+} Map_c;
+
 typedef struct position_c 
 {
 	float x, y;
+    Map_c *map;
 } Position_c;
 
 typedef struct velocity_c
@@ -35,13 +45,6 @@ typedef struct Model_c
     char **map;
 } Model_c;
 
-typedef struct Map_c
-{
-    entID owner;
-    int height;
-    int width;
-    Tile *map;
-} Map_c;
 
 typedef void *RNG;
 typedef struct RNG_c

@@ -14,14 +14,10 @@ sysID movementSystem;
 
 int initMovementSystem(void)
 {
-	//diana_watch(wreckerD, movementSystem, PositionID);
-	//diana_watch(wreckerD, movementSystem, VelocityID);
-
     WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
 		DL_SYSTEM_FLAG_NORMAL, &movementSystem);
     s_watchComponents( movementSystem, 2, PositionID, 
                                           VelocityID );
-
     return 0;
 }
                                           
@@ -36,6 +32,41 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
 	position->x += velocity->dx * delta;
 	position->y += velocity->dy * delta;
 
-	//printf("%i move to (%f,%f)\n", entity, position->x, position->y);
+    /*
+        if New Position is outside bounds of current map
+        Move to Sector map.
+        Are we inside the location of another map?
+        Move to that map.
+    */
+
+    if (position->x < 0 || position->x >= position->map->width ||
+        position->y < 0 || position->y >=  position->map->height) {
+
+        Position_c parentPos;
+        EID parent = position->map->parent;
+
+        WRECK(getComponent, parent, PositionID, (void **)&parentPos);
+        position->x += parentPos->x;
+        position->y += parentPos->y;
+        position->map = parentPos->map;
+
+        // Check Sector to see if new Position falls into another Map.
+        // checkForMap( position, parent )
+    }
+}
+
+/*
+ * Check live sector to see if new Position falls within the bounds of another active map.
+ * Example: An alien moves out of the map for ship A, which puts him in the global map.
+ *          Then we run this function and determine he is now within the bounds of ship B.
+ */ 
+
+void checkForMap( Position_c *position, EID sector )
+{
+    /* Poll list of entities with maps in sector.
+     * Is new Position within bounds of a map?
+     * calculate offset for new map coordinates
+     * Update map info.
+     */
 }
 

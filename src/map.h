@@ -13,8 +13,14 @@ enum tile_type{
     FLOOR,
 };
 
+typedef struct TileLayer
+{
+    short type;
+    short health;
+} TileLayer;
+
 //TODO: Build system that loads tile Types into an indexed array.
-typedef struct Tile 
+typedef struct Cell 
 {
     unsigned short tileLayer[3]; // Made up of tileTypes.
     unsigned long tileFlags;
@@ -22,7 +28,7 @@ typedef struct Tile
 
     bool walkable;
     bool transparent;
-} Tile;
+} Cell;
 
 enum tile_flagList
 {
