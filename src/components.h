@@ -10,6 +10,13 @@
 #include "BearLibTerminal.h"
 #include "random.h"
 
+typedef struct eType_c
+{
+    enum entityType t;
+    bool has_map;
+    bool active;
+};
+
 typedef struct Map_c
 {
     EID parent;
@@ -52,6 +59,7 @@ typedef struct RNG_c
     RNG instance;
 } RNG_c;
 
+extern componentID eTypeID;
 extern componentID PositionID;
 extern componentID VelocityID;
 extern componentID RenderID;

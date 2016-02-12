@@ -28,6 +28,7 @@ error:
 
 void _registerComponents(void)
 {
+    _buildComponent( "eType", sizeof(eType_c), &eTypeID);
     _buildComponent( "Position", sizeof(Position_c), &PositionID);
     _buildComponent( "Render", sizeof(Render_c), &RenderID);
     _buildComponent( "Velocity", sizeof(Velocity_c), &VelocityID);
