@@ -14,6 +14,7 @@
 
 #define E_LIST_MAX 100
 
+//TODO: Rework into a resizing buffered list.
 typedef struct ent_list
 {
     EID ents[E_LIST_MAX];

@@ -68,5 +68,37 @@ void checkForMap( Position_c *position, EID sector )
      * calculate offset for new map coordinates
      * Update map info.
      */
+     Position_c *parentPos;
+     eType      *type; 
+     ent_list   *list;
+
+
+     WRECK(getComponent, sector, entityListID, (void **)&parentPos);
+     check(parentPos, "Unable to load entity list for entity: %d", sector);
+
+     for (int i = 0; i < list->num; i++){
+
+        WRECK(getComponent, list->ents[i], TypeID, (void **)&type);
+        if (type->map == true){
+
+            WRECK(getComponent, list-ents[i], PositionID, (void **)&parentPos);
+            int xMax = parentPos->x + parentPos->map->width;
+            int yMax = parentPos->y + parentPos->map->height;
+
+            if (position->x >= parentPos->x && position->x < xMax
+                && position->y >= parentPos->y && position->y < yMax){
+
+                position->map = parentPos->map;
+                position->x -= parentPos->x;
+                position->y -= parentPos->y;
+                break;
+            }
+        }
+    }
+
+    return;
+error:
+    log_info("Error updating Entity position from Map to Map.");
+    exit(1);
 }
 
