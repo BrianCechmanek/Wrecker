@@ -65,19 +65,3 @@ void freeInputDomain(int domain );
  *       Check if key already assigned.
  */
 #endif
-
-void handleInput( int code )
-{
-    if (code == TK_RESIZED){
-        _resizeWindow();
-    }
-
-    if (code == TK_MOUSE_MOVE){
-        input_mouseX = (float) terminal_state(TK_MOUSE_X);
-        input_mouseY = (float) terminal_state(TK_MOUSE_Y);
-    } else {
-        checkCommand( code );
-    }
-    return;
-}
-

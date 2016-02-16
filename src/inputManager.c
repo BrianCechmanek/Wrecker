@@ -14,8 +14,8 @@
 static List **inputDomainList;
 static unsigned long activeInputDomains;
 
-extern float input_mouseX;
-extern float input_mouseY;
+float input_mouseX;
+float input_mouseY;
 
 void init_cmdManager(void)
 {
