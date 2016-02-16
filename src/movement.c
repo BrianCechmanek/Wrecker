@@ -16,7 +16,7 @@ sysID movementSystem;
 int initMovementSystem(void)
 {
     WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
-		DL_SYSTEM_FLAG_NORMAL, &movementSystem);
+		DL_SYSTEM_FLAG_PASSIVE, &movementSystem);
     s_watchComponents( movementSystem, 2, PositionID, 
                                           VelocityID );
     return 0;
@@ -30,8 +30,12 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
 	diana_getComponent(diana, entity, PositionID, (void **)&position);
 	diana_getComponent(diana, entity, VelocityID, (void **)&velocity);
 
-	position->x += velocity->dx * delta;
-	position->y += velocity->dy * delta;
+	position->x += velocity->dx * (delta / 1000.f);
+	position->y += velocity->dy * (delta / 1000.f);
+
+	// just testing the render stuff.
+	if (position->y > 50) position->y = 0;
+	if (position->x > 50) position->x = 0;
 
     /*
         if New Position is outside bounds of current map
@@ -40,7 +44,7 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
         Move to that map.
     */
 
-    if (position->x < 0 || position->x >= position->map->width ||
+    /*if (position->x < 0 || position->x >= position->map->width ||
         position->y < 0 || position->y >=  position->map->height) {
 
         Position_c *parentPos;
@@ -53,7 +57,7 @@ void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float
 
         // Check Sector to see if new Position falls into another Map.
         // checkForMap( position, parent )
-    }
+    }*/
 }
 
 /*

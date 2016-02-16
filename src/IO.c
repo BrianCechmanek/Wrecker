@@ -93,11 +93,13 @@ void initWrecker()
 void updateGame( double delta )
 {
     WRECK( process, delta );
+
+	WRECK(processSystem, movementSystem, delta);
 }
 
 void render(double delta)
 {
-    //WRECK(processSystem, renderSystem, 0);
+	WRECK(processSystem, renderSystem, delta);
 	terminal_refresh();
 }
 

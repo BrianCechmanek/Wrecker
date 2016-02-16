@@ -13,6 +13,7 @@
 #include "systems.h"
 #include "timer.h"
 #include "components.h"
+#include "model.h"
 
 gameState *Wrecker;
 Event_s *eventSys;
@@ -24,7 +25,7 @@ int main(void)
 {
 	int running = 1;
 
-	Velocity_c ev = { 1.5, 0, 9 };
+	Velocity_c ev = { 5, 0, 9 };
 	Render_c r = { '@' };
 	unsigned int movementSystem, renderSystem, computeSystem, e, e1;
 
@@ -38,16 +39,33 @@ int main(void)
 	initDisplayBuffer();
 
     initWrecker();
+	Position_c pos = { 5.f, 5.f };
+
+	Model_c model;
+	model.Cells = malloc(sizeof(ModelCell) * 3);
+	model.Cells[0].bgColor = 0xFFFF0000;
+	model.Cells[0].fgColor = 0xFF000000;
+	model.Cells[0].x = -1;
+	model.Cells[0].y = 0;
+	model.Cells[0].characterCode = '|';
+	model.Cells[1].bgColor = 0xFFFF0000;
+	model.Cells[1].fgColor = 0xFF000000;
+	model.Cells[1].x = 0;
+	model.Cells[1].y = 0;
+	model.Cells[1].characterCode = '-';
+	model.Cells[2].bgColor = 0xFFFF0000;
+	model.Cells[2].fgColor = 0xFF000000;
+	model.Cells[2].x = 1;
+	model.Cells[2].y = 0;
+	model.Cells[2].characterCode = '|';
+	model.numberOfCells = 3;
 
 	WRECK(spawn, &e);
-	WRECK(setComponent, e, PositionID, NULL);
+	WRECK(setComponent, e, PositionID, &pos);
+	WRECK(setComponent, e, ModelID, &model);
 	WRECK(setComponent, e, VelocityID, &ev);
 	WRECK(signal, e, DL_ENTITY_ADDED);
 
-	WRECK(spawn, &e1);
-	WRECK(setComponent, e1, PositionID, NULL);
-	WRECK(setComponent, e1, RenderID, &r);
-	WRECK(signal, e1, DL_ENTITY_ADDED);
 
 	// Start timer
 	tick_t start, time;
@@ -74,7 +92,7 @@ int main(void)
 
 		//Update Game Elements
 		updateGame(deltaMs);
-
+		terminal_clear();
 		// Add the fps counter and frametime to the screen
 		char timebuffer[60];
 		char fpsbuffer[60];

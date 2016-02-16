@@ -12,6 +12,8 @@
 
 #define E_LIST_MAX 100 // TEMPORARY: TODO:REWORK TO BE EXMAPDNING BUFFER
 
+typedef struct ModelCell ModelCell;
+
 typedef struct ent_list_c
 {
     entID ents[E_LIST_MAX];
@@ -53,6 +55,8 @@ typedef struct Render_c
 
 typedef struct Model_c
 {
+	ModelCell *Cells;
+	unsigned numberOfCells;
     char *name;
     int height;
     int width;
