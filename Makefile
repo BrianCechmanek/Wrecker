@@ -2,6 +2,9 @@ TARGET = wrecker
 SRC_DIR = src
 OBJ_DIR = obj
 
+# test targets
+TEST_KRNG = test_krng
+
 LDFLAGS = -lBearLibTerminal
 CFLAGS = -std=gnu99 -g -Wall
 
@@ -25,4 +28,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	rm -f $(TARGET)
 	rm -rf $(OBJ_DIR)
+	rm -f test_krng
 
+.PHONY: rng
+$(TEST_KRNG):
+	gcc $(CFLAGS) -DTEST_KRNG -c src/krng.c -o obj/krng.o
+	gcc $(CFLAGS) -o $@ obj/krng.o
