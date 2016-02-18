@@ -54,12 +54,12 @@ static uint32_t krng_rand_int(struct krng *rng)
     return kiss;
 }
 
-unsigned krng_rand_int_range(struct krng *rng, unsigned min, unsigned max)
+int krng_rand_rangei(struct krng *rng, int min, int max)
 {
     assert(max >= min);
     float unif = krng_rand_unif(rng);
     float scaled = unif * (float)(max - min + 1);
-    return ((unsigned)scaled) + min;
+    return ((int)scaled) + min;
 }
 
 float krng_rand_unif(struct krng *rng)
@@ -124,19 +124,19 @@ int main()
     const int max_tolerance = (1.0f + tolerance) * expected_hits;
     unsigned hits[count] = { 0 };
 
-    // Test krng_rand_int_range
-    printf("Testing krng_rand_int_range\n");
+    // Test krng_rand_rangei
+    printf("Testing krng_rand_rangei\n");
     __reset_hits(hits, count);
     for (i = 0; i < iterations; i++)
     {
-        uint32_t k = krng_rand_int_range(&rng, min, max);
+        int k = krng_rand_rangei(&rng, min, max);
         hits[k - min] += 1;
     }
 
     printf("Distribution after %u iterations:\n", iterations);
     for (i = 0; i < count; i++)
     {
-        uint32_t k = i + min;
+        int k = i + min;
         char *check_result = __check_string(hits[i], min_tolerance, max_tolerance);
         printf("%u = %u %s\n", k, hits[i], check_result);
     }

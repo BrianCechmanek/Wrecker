@@ -16,7 +16,7 @@ uint32_t KRNG_DEFAULT_SEED[] = { 12345, 65435, 34221, 12345 };
 void krng_seed(struct krng *krng, uint32_t *seed);
 
 // Get a random integer in the range min <= x <= max
-unsigned krng_rand_int_range(struct krng *rng, unsigned min, unsigned max);
+int krng_rand_rangei(struct krng *rng, int min, int max);
 
 // Get a random float in the range 0 < x < 1
 float krng_rand_unif(struct krng *rng);
