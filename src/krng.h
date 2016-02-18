@@ -3,15 +3,17 @@
 
 #include <stdint.h>
 
-// Forward declaration
-struct krng;
+// Struct to store KISS rng state
+struct krng
+{
+    uint32_t z, w, jsr, jcong;
+};
 
 // Good default seed to use
 uint32_t KRNG_DEFAULT_SEED[] = { 12345, 65435, 34221, 12345 };
 
-// Seed krng with an array of 4 integers,
-// returning that structure that will hold the rng state
-struct krng krng_seed(uint32_t *seed);
+// Seed an rng with an array of 4 integers
+void krng_seed(struct krng *krng, uint32_t *seed);
 
 // Get a random integer in the range min <= x <= max
 unsigned krng_rand_int_range(struct krng *rng, unsigned min, unsigned max);

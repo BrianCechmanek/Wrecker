@@ -6,24 +6,16 @@
 // KISS rng implementation from:
 // https://programmingpraxis.com/2010/10/05/george-marsaglias-random-number-generators/
 
-// Internal struct for KISS rng state
-struct krng
-{
-    uint32_t z, w, jsr, jcong;
-};
-
 // Constants for computation
 static const float KRNG_UNIF_CONST = 1.0f / (float)0xFFFFFFFF;
 static const float KRNG_VNIF_CONST = 2.0f / (float)0xFFFFFFFF;
 
-struct krng krng_seed(uint32_t *seed)
+void krng_seed(struct krng *rng, uint32_t *seed)
 {
-    struct krng rng;
-    rng.z = seed[0];
-    rng.w = seed[1];
-    rng.jsr = seed[2];
-    rng.jcong = seed[3];
-    return rng;
+    rng->z = seed[0];
+    rng->w = seed[1];
+    rng->jsr = seed[2];
+    rng->jcong = seed[3];
 }
 
 // Macro math for inline code
@@ -109,7 +101,8 @@ static char *__check_string(int hits, int min_tolerance, int max_tolerance)
 
 int main()
 {
-    struct krng rng = krng_seed(KRNG_DEFAULT_SEED);
+    struct krng rng;
+    krng_seed(&rng, KRNG_DEFAULT_SEED);
     int i;
     uint32_t check;
     for (i = 1; i < 1000001; i++)
