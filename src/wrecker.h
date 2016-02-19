@@ -28,7 +28,18 @@
 #define MS_PER_UPDATE 14
 #define UPDATE_PER_FRAME 10
 
-#define WRECK(F, ...) do { int ___err = diana_ ## F (wreckerD, ## __VA_ARGS__); if(___err != DL_ERROR_NONE && ___err != DL_ERROR_FULL_COMPONENT) { printf("%s:%i diana_" #F "(wreckerD, " #__VA_ARGS__ ") -> %i\n", __FILE__, __LINE__, ___err); break; } } while(0)
+#define WRECK(F, ...) \
+do \
+{ \
+    int _err_ = diana_ ## F (wreckerD, ## __VA_ARGS__); \
+    if (_err_ != DL_ERROR_NONE && \
+        _err_ != DL_ERROR_FULL_COMPONENT) \
+    { \
+        char *_fmt_ = "%s:%i diana_" #F "(wreckerD, " #__VA_ARGS__ ") -> %i\n"; \
+        printf(_fmt_, __FILE__, __LINE__, _err_); \
+        break; \
+    } \
+} while (0)
 
 #define FLOOR_CHAR      '.'
 #define SPACE_CHAR      ' '

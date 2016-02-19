@@ -2,6 +2,7 @@
  * INPUT MANAGER
  */
 
+#include "dbg.h"
 #include "inputManager.h"
 #include "BearLibTerminal.h"
 #include "dataStructures.h"
@@ -9,7 +10,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <dbg.h>
 
 static List **inputDomainList;
 static unsigned long activeInputDomains;

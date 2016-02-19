@@ -100,8 +100,6 @@ int sendEvent( Event_s *self, const char *event, void *evData)
 static int removeListener( Event_s *self, listener_t *listener)
 {
     Node *cur = self->listeners->first;
-    listener_t *tmp;
-	tmp;
     if (cur == NULL){
         return -1;
     }
