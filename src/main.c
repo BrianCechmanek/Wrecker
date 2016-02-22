@@ -92,18 +92,10 @@ int main(void)
 
 		//Update Game Elements
 		updateGame(deltaMs);
-		terminal_clear();
-		// Add the fps counter and frametime to the screen
-		char timebuffer[60];
-		char fpsbuffer[60];
-		sprintf(timebuffer, "%G ms", deltaMs);
-		unsigned fps = (unsigned)(1000.0 / deltaMs);
-		sprintf(fpsbuffer, "%d fps", fps);
-		terminal_print(1, 1, timebuffer);
-		terminal_print(1, 2, fpsbuffer);
-
+		
 		// Draw game
-		render(deltaMs);
+		render(deltaMs); 
+
     }
     //Call Destructors
     terminal_close();

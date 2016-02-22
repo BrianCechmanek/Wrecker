@@ -54,8 +54,8 @@ void initWreckState(void)
 // TODO: Rework to be more flexible
 void initDisplayBuffer(void)
 {
-    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * sizeof(*displayBuffer));
-    displayBuffer[0] = emalloc( DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(  displayBuffer ));
+	displayBuffer = emalloc(DBUFF_MEM_HEIGHT * sizeof(cellDisplayBuffer *));
+	displayBuffer[0] = emalloc(DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(cellDisplayBuffer));
     for (int i = 1; i < DBUFF_MEM_HEIGHT; i++){
         displayBuffer[i] = displayBuffer[0] + i * DBUFF_MEM_WIDTH;
     }
@@ -97,9 +97,43 @@ void updateGame( double delta )
 	WRECK(processSystem, movementSystemId, delta);
 }
 
+void DrawDisplayBuffer()
+{
+	for (int y = 0; y < DBUFF_MEM_HEIGHT; y++){
+		for (int x = 0; x < DBUFF_MEM_WIDTH; x++){
+			terminal_put(x, y, displayBuffer[y][x].code);
+		}
+	}
+}
+
+void clearScreen()
+{
+	terminal_clear();
+	for (int y = 0; y < DBUFF_MEM_HEIGHT; y++){
+		for (int x = 0; x < DBUFF_MEM_WIDTH; x++){
+			displayBuffer[y][x].code = SPACE_CHAR;
+			displayBuffer[y][x].backColor = 0;
+			displayBuffer[y][x].foreColor = 0;
+			displayBuffer[y][x].needsUpdate = 0;
+		}
+	}
+}
+
 void render(double delta)
 {
+	clearScreen();
 	WRECK(processSystem, renderSystemId, delta);
+	DrawDisplayBuffer();
+
+	// Add the fps counter and frametime to the screen
+	char timebuffer[60];
+	char fpsbuffer[60];
+	sprintf(timebuffer, "%G ms", delta);
+	unsigned fps = (unsigned)(1000.0 / delta);
+	sprintf(fpsbuffer, "%d fps", fps);
+	terminal_print(0, 0, timebuffer);
+	terminal_print(0, 1, fpsbuffer);
+
 	terminal_refresh();
 }
 
