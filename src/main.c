@@ -36,7 +36,7 @@ int main(void)
 
 	terminal_set(stringbuffer);
 
-	initDisplayBuffer();
+	//initDisplayBuffer();
 
     initWrecker();
 	Position_c pos = { 5.f, 5.f };

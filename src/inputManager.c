@@ -88,8 +88,6 @@ int checkCommand( int code )
             }
         }
     }
-    printf("Active Domains: %d\n", active);
-
     return 1;
 }
 
