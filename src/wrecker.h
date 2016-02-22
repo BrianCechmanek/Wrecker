@@ -61,6 +61,7 @@ typedef struct cellDisplayBuffer
     color_t foreColor;
     color_t backColor;
     bool needsUpdate;
+	int layer;
     // char opacity;
 } cellDisplayBuffer;
 

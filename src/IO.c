@@ -92,9 +92,9 @@ void initWrecker()
 
 void updateGame( double delta )
 {
-    WRECK( process, delta );
+    WRECK( process, (float)delta );
 
-	WRECK(processSystem, movementSystemId, delta);
+	WRECK(processSystem, movementSystemId, (float)delta);
 }
 
 void DrawDisplayBuffer()
@@ -114,7 +114,8 @@ void clearScreen()
 			displayBuffer[y][x].code = SPACE_CHAR;
 			displayBuffer[y][x].backColor = 0;
 			displayBuffer[y][x].foreColor = 0;
-			displayBuffer[y][x].needsUpdate = 0;
+			displayBuffer[y][x].needsUpdate = 0; 
+			displayBuffer[y][x].layer = -999;
 		}
 	}
 }
@@ -122,7 +123,7 @@ void clearScreen()
 void render(double delta)
 {
 	clearScreen();
-	WRECK(processSystem, renderSystemId, delta);
+	WRECK(processSystem, renderSystemId, (float)delta);
 	DrawDisplayBuffer();
 
 	// Add the fps counter and frametime to the screen

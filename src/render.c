@@ -18,16 +18,16 @@ static void _process(struct diana *diana, void *user_data, unsigned int entity, 
 	diana_getComponent(diana, entity, PositionID, (void **)&position);
 	diana_getComponent(diana, entity, ModelID, (void **)&model);
 
-	for (int i = 0; i < model->numberOfCells; i++)
+	for (unsigned i = 0; i < model->numberOfCells; i++)
 	{
-		displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].code = model->Cells[i].characterCode;// renderer->code;
-		displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].foreColor = model->Cells[i].fgColor;//r->foreColor;
-		displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].backColor = model->Cells[i].bgColor;//r->backColor;
-		//terminal_put((int)(model->Cells[i].x + position->x), (int)(model->Cells[i].y + position->y), model->Cells[i].characterCode);
+		if (displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].layer <= model->Cells[i].layer)
+		{
+			displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].code = model->Cells[i].characterCode;
+			displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].foreColor = model->Cells[i].fgColor;
+			displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].backColor = model->Cells[i].bgColor;
+			displayBuffer[(int)(model->Cells[i].y + position->y)][(int)(model->Cells[i].x + position->x)].layer = model->Cells[i].layer;
+		}
 	}
-
-
-	//terminal_put((int)(position->x), (int)(position->y), displayBuffer[(int)(position->y)][(int)(position->x)].code);
 }
 
 
