@@ -10,7 +10,7 @@ struct krng
 };
 
 // Good default seed to use
-uint32_t KRNG_DEFAULT_SEED[] = { 12345, 65435, 34221, 12345 };
+static uint32_t KRNG_DEFAULT_SEED[] = { 12345, 65435, 34221, 12345 };
 
 // Seed an rng with an array of 4 integers
 void krng_seed(struct krng *krng, uint32_t *seed);

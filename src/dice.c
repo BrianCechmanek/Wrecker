@@ -6,6 +6,7 @@
 #include "dice.h"
 
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 #include "dbg.h"
 #include <math.h>

@@ -28,7 +28,8 @@ struct systemInfo
     void *userData;
     unsigned int flags;
 };
-const struct systemInfo ECS_SYSTEM_INFO_DEFAULT = { "(unnamed)", 0, 0, 0, 0, 0, 0, DL_SYSTEM_FLAG_PASSIVE };
+
+static const struct systemInfo ECS_SYSTEM_INFO_DEFAULT = { "(unnamed)", 0, 0, 0, 0, 0, 0, DL_SYSTEM_FLAG_PASSIVE };
 
 // Create a system
 int ecs_createSystem(struct diana *diana, struct systemInfo *info, systemID *system);
