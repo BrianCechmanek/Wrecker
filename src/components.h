@@ -8,7 +8,6 @@
 
 #include "wrecker.h"
 #include "BearLibTerminal.h"
-#include "random.h"
 
 #define E_LIST_MAX 100 // TEMPORARY: TODO:REWORK TO BE EXMAPDNING BUFFER
 

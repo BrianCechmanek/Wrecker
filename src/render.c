@@ -9,29 +9,6 @@
 
 systemID renderSystemId;
 
-int render_createSystem(struct diana *diana)
-{
-    int error;
-
-    struct systemInfo info = ECS_SYSTEM_INFO_DEFAULT;
-    info->name = "render";
-    info->process = _process;
-
-    error = ecs_createSystem(diana, info, &renderSystemId);
-    if (error != DL_ERROR_NONE)
-    {
-        return error;
-    }
-
-    componentID *components = { PositionID, ModelID };
-    error = ecs_watchComponents(renderSystemId, components);
-    if (error != DL_ERROR_NONE)
-    {
-        return error;
-    }
-
-    return error;
-}
 
 static void _process(struct diana *diana, void *user_data, unsigned int entity, float delta)
 {
@@ -54,4 +31,29 @@ static void _process(struct diana *diana, void *user_data, unsigned int entity, 
 
 	terminal_put((int)(position->x), (int)(position->y), displayBuffer[(int)(position->x)][(int)(position->y)].code);
 	*/
+}
+
+
+int render_createSystem(struct diana *diana)
+{
+    int error;
+
+    struct systemInfo info = ECS_SYSTEM_INFO_DEFAULT;
+    info.name = "render";
+    info.process = _process;
+
+    error = ecs_createSystem(diana, &info, &renderSystemId);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+	componentID components[2] = { PositionID, ModelID };
+    error = ecs_watchComponents(diana, renderSystemId, 2, components);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    return error;
 }

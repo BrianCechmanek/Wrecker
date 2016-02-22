@@ -13,30 +13,6 @@
 
 systemID movementSystemId;
 
-int movement_createSystem(struct diana *diana)
-{
-    int error = DL_ERROR_NONE;
-
-    struct systemInfo info = ECS_SYSTEM_INFO_DEFAULT;
-    info.name = "movement";
-    info.process = _process;
-
-    error = ecs_createSystem(diana, info, &movementSystemId);
-    if (error != DL_ERROR_NONE)
-    {
-        return error;
-    }
-
-    componentID *components = { PositionID, VelocityID };
-    error = ecs_watchComponents(diana, movementSystemId, ARRAY_SIZE(components), components);
-    if (error != DL_ERROR_NONE)
-    {
-        return error;
-    }
-
-    return error;
-}
-
 void _process(struct diana *diana, void *user_data, unsigned int entity, float delta)
 {
 	Position_c *position;
@@ -52,28 +28,53 @@ void _process(struct diana *diana, void *user_data, unsigned int entity, float d
 	if (position->y > 50) position->y = 0;
 	if (position->x > 50) position->x = 0;
 
-    /*
-        if New Position is outside bounds of current map
-        Move to Sector map.
-        Are we inside the location of another map?
-        Move to that map.
-    */
+	/*
+	if New Position is outside bounds of current map
+	Move to Sector map.
+	Are we inside the location of another map?
+	Move to that map.
+	*/
 
-    /*if (position->x < 0 || position->x >= position->map->width ||
-        position->y < 0 || position->y >=  position->map->height) {
+	/*if (position->x < 0 || position->x >= position->map->width ||
+	position->y < 0 || position->y >=  position->map->height) {
 
-        Position_c *parentPos;
-        entID parent = position->map->parent;
+	Position_c *parentPos;
+	entID parent = position->map->parent;
 
-        WRECK(getComponent, parent, PositionID, (void **)&parentPos);
-        position->x += parentPos->x;
-        position->y += parentPos->y;
-        position->map = parentPos->map;
+	WRECK(getComponent, parent, PositionID, (void **)&parentPos);
+	position->x += parentPos->x;
+	position->y += parentPos->y;
+	position->map = parentPos->map;
 
-        // Check Sector to see if new Position falls into another Map.
-        // checkForMap( position, parent )
-    }*/
+	// Check Sector to see if new Position falls into another Map.
+	// checkForMap( position, parent )
+	}*/
 }
+
+int movement_createSystem(struct diana *diana)
+{
+    int error = DL_ERROR_NONE;
+
+    struct systemInfo info = ECS_SYSTEM_INFO_DEFAULT;
+    info.name = "movement";
+    info.process = _process;
+
+    error = ecs_createSystem(diana, &info, &movementSystemId);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    componentID components[2] = { PositionID, VelocityID };
+    error = ecs_watchComponents(diana, movementSystemId, ARRAY_SIZE(components), components);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    return error;
+}
+
 
 /*
  * Check live sector to see if new Position falls within the bounds of another active map.
