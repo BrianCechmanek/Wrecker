@@ -7,23 +7,33 @@
 #include "systems.h"
 #include "model.h"
 
+systemID renderSystemId;
 
-#define NORMAL_SYSTEM 0
-#define PASSIVE_SYSTEM 1
-
-sysID renderSystem;
-
-int initRenderSystem(void)
+int render_createSystem(struct diana *diana)
 {
-    WRECK(createSystem, "render", NULL, p_Render, NULL, NULL, NULL, NULL,
-		DL_SYSTEM_FLAG_PASSIVE, &renderSystem);
-    s_watchComponents( renderSystem, 2, PositionID,
-                                        ModelID);
+    int error;
 
-    return 0;
+    struct systemInfo info = ECS_SYSTEM_INFO_DEFAULT;
+    info->name = "render";
+    info->process = _process;
+
+    error = ecs_createSystem(diana, info, &renderSystemId);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    componentID *components = { PositionID, ModelID };
+    error = ecs_watchComponents(renderSystemId, components);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    return error;
 }
 
-void p_Render(struct diana *diana, void *user_data, unsigned int entity, float delta)
+static void _process(struct diana *diana, void *user_data, unsigned int entity, float delta)
 {
 	Position_c *position;
 	Model_c *model;

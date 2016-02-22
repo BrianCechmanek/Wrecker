@@ -1,87 +1,109 @@
+#include <diana.h>
+
 #include "ECS.h"
-
+#include "dbg.h"
 #include "wrecker.h"
-#include "diana.h"
-#include "systems.h"
-#include "components.h"
 
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 
-/*
- *  _buildComponent is used by _registerComponents.
- *  To add a new component, please add a new _buildComponent() call 
- *  to registerComponents
- */
+// Includes for components
+#include "health.h"
+#include "resistance.h"
+#include "components.h" // TODO delete this header, break it up into components
 
-void _buildComponent( char *name, size_t comp_size, componentID *id)
+// Includes for systems
+#include "systems.h" // TODO delete this header, break it up into components
+
+static void _registerComponents(struct diana *diana)
 {
-    int err;
-
-    err = diana_createComponent( wreckerD, name, comp_size, DL_COMPONENT_FLAG_INLINE, id);
-    check( err == 0, "Error loading component: %s. Error code: %d", name, err);
-    return;
-
-error:
-    exit(1);
-}
-
-void _registerComponents(void)
-{
-    _buildComponent( "eType", sizeof(eType_c), &eTypeID);
-    _buildComponent( "Position", sizeof(Position_c), &PositionID);
-    _buildComponent( "Render", sizeof(Render_c), &RenderID);
-    _buildComponent( "Velocity", sizeof(Velocity_c), &VelocityID);
-    _buildComponent( "Model", sizeof(Model_c), &ModelID);
-    _buildComponent( "Map", sizeof(Map_c), &MapID);
-    _buildComponent( "RNG", sizeof(RNG_c), &RNGID);
+    struct componentInfo components[] = {
+        { "eType",      sizeof(eType_c),                    DL_COMPONENT_FLAG_INLINE, &eTypeID },
+        { "Position",   sizeof(Position_c),                 DL_COMPONENT_FLAG_INLINE, &PositionID },
+        { "Render",     sizeof(Render_c),                   DL_COMPONENT_FLAG_INLINE, &RenderID },
+        { "Velocity",   sizeof(Velocity_c),                 DL_COMPONENT_FLAG_INLINE, &VelocityID },
+        { "Model",      sizeof(Model_c),                    DL_COMPONENT_FLAG_INLINE, &ModelID },
+        { "Map",        sizeof(Map_c),                      DL_COMPONENT_FLAG_INLINE, &MapID },
+        { "RNG",        sizeof(RNG_c),                      DL_COMPONENT_FLAG_INLINE, &RNGID },
+        { "Health",     sizeof(struct healthComponent),     DL_COMPONENT_FLAG_INLINE, &HealthID },
+        { "Resistance", sizeof(struct resistanceComponent), DL_COMPONENT_FLAG_INLINE, &ResistanceID },
+    };
+    int error = ecs_createComponents(diana, ARRAY_SIZE(components), components);
 
     log_info("Components Loaded.");
     return;
 }
 
-/*
-   Lets you add multiple components to a System.
-   num_c is the total number of components.
-   ex:
-        s_watchComponents( movementSystem, 2, Position, Velocity);
- */
-
-void s_watchComponents( sysID theSystem, int num_c, ...)
+static void _initSystems(struct diana *diana)
 {
-        va_list ap;
-        componentID theComponent;
-
-        va_start(ap, num_c);
-        for (int i = 0; i < num_c; i++){
-                theComponent = va_arg(ap, componentID);
-                WRECK(watch, theSystem, theComponent);
-        }
-        va_end(ap);
+    movement_createSystem(diana);
+    render_createSystem(diana);
 }
 
-void _initSystems(void)
-{
-    initMovementSystem();
-    initRenderSystem();
-}
-
-void initECS(void)
+void ecs_initialize()
 {
     allocate_diana(emalloc, free, &wreckerD);
-    _registerComponents();
-    _initSystems();
+    _registerComponents(wreckerD);
+    _initSystems(wreckerD);
     WRECK(initialize);
 }
 
-/* Returns a void pointer to the requested entities component.
-   Remember to CAST the void pointer after receiving it!
- */
-// Change to macro later.
-
-void *getComponent( entID theEntity, componentID theComponent)
+int ecs_createComponents(struct diana *diana, unsigned int count, struct componentInfo *components)
 {
-    void *data;
-    WRECK( getComponent, theEntity, theComponent, (void **)&data);
-    return data;
+    int error = DL_ERROR_NONE;
+
+    int i;
+    for (int i = 0; i < count; i++)
+    {
+        struct componentInfo info = components[i];
+        int error = diana_createComponent(diana, info.name, info.size, info.flags, info.id);
+        if (error != DL_ERROR_NONE)
+        {
+            // Any failure in creating components is fatal; abandon other operations
+            log_err("error %u: failed to create component %s of size %zu with flags %u", error, info.name, info.size, info.flags);
+            break;
+        }
+    }
+
+    return error;
+}
+
+int ecs_createSystem(struct diana *diana, struct systemInfo *info, systemID *system)
+{
+    int error = diana_createSystem(diana
+        , info->name
+        , info->starting
+        , info->process
+        , info->ending
+        , info->subscribed
+        , info->unsubscribed
+        , info->userData
+        , info->flags
+        , system);
+    if (error != DL_ERROR_NONE)
+    {
+        log_err("error %u: failed to create system %s", error, info->name);
+    }
+
+    return error;
+}
+
+int ecs_watchComponents(struct diana *diana, systemID system, unsigned int count, componentID *components)
+{
+    int error = DL_ERROR_NONE;
+
+    int i;
+    for (int i = 0; i < count; i++)
+    {
+        componentID component = components[i];
+        int error = diana_watch(diana, system, component);
+        if (error != DL_ERROR_NONE)
+        {
+            // Any failure in creating components is fatal; abandon other operations
+            log_err("error %u: failed to put system %u watch on component %u", error, system, component);
+            break;
+        }
+    }
+
+    return error;
 }

@@ -1,6 +1,6 @@
 /*
  *  Wrecker
- *  IO.c 
+ *  IO.c
  *  Input/Output functions; controls; interacting with system.
  */
 
@@ -87,19 +87,19 @@ void initWrecker()
     initWreckState();
     initDisplayBuffer();
     initEventSys();
-    initECS();
+    ecs_initialize();
 }
 
 void updateGame( double delta )
 {
     WRECK( process, delta );
 
-	WRECK(processSystem, movementSystem, delta);
+	WRECK(processSystem, movementSystemId, delta);
 }
 
 void render(double delta)
 {
-	WRECK(processSystem, renderSystem, delta);
+	WRECK(processSystem, renderSystemId, delta);
 	terminal_refresh();
 }
 

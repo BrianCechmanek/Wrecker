@@ -10,14 +10,12 @@
 #include "wrecker.h"
 
 
-int initMovementSystem(void);
-void p_Movement( struct diana *diana, void *ud, entID e, float d);
+int movement_createSystem(struct diana *diana);
 
-int initRenderSystem(void);
-void p_Render(struct diana *diana, void *ud, entID e, float d);
+int render_createSystem(struct diana *diana);
 void render(double);
 
-extern sysID renderSystem;
-extern sysID movementSystem;
+extern systemID renderSystemId;
+extern systemID movementSystemId;
 
 #endif

@@ -1,7 +1,7 @@
 /*
- * Movement.c 
- * Initital movement system, mostly to be used as template. 
- *  
+ * Movement.c
+ * Initital movement system, mostly to be used as template.
+ *
  */
 
 #include "systems.h"
@@ -11,18 +11,33 @@
 #include "components.h"
 #include "map.h"
 
-sysID movementSystem;
+systemID movementSystemId;
 
-int initMovementSystem(void)
+int movement_createSystem(struct diana *diana)
 {
-    WRECK(createSystem, "movement", NULL, p_Movement, NULL, NULL, NULL, NULL,
-		DL_SYSTEM_FLAG_PASSIVE, &movementSystem);
-    s_watchComponents( movementSystem, 2, PositionID, 
-                                          VelocityID );
-    return 0;
+    int error = DL_ERROR_NONE;
+
+    struct systemInfo info = ECS_SYSTEM_INFO_DEFAULT;
+    info.name = "movement";
+    info.process = _process;
+
+    error = ecs_createSystem(diana, info, &movementSystemId);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    componentID *components = { PositionID, VelocityID };
+    error = ecs_watchComponents(diana, movementSystemId, ARRAY_SIZE(components), components);
+    if (error != DL_ERROR_NONE)
+    {
+        return error;
+    }
+
+    return error;
 }
-                                          
-void p_Movement(struct diana *diana, void *user_data, unsigned int entity, float delta)
+
+void _process(struct diana *diana, void *user_data, unsigned int entity, float delta)
 {
 	Position_c *position;
 	Velocity_c *velocity;

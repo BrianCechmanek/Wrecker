@@ -1,5 +1,4 @@
 *.o
 test_krng
-wrecker
-
+test_damage
 wrecker

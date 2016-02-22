@@ -50,7 +50,7 @@ do \
 #define SWITCH_CHAR     '/'
 
 //  Typedefs to simplify common types
-typedef unsigned int sysID;
+typedef unsigned int systemID;
 typedef unsigned int componentID;
 typedef unsigned int entID;
 

@@ -27,7 +27,7 @@ int main(void)
 
 	Velocity_c ev = { 5, 0, 9 };
 	Render_c r = { '@' };
-	unsigned int movementSystem, renderSystem, computeSystem, e, e1;
+	unsigned int e, e1;
 
     terminal_open();
 
