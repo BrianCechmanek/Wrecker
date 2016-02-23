@@ -92,7 +92,6 @@ int ecs_watchComponents(struct diana *diana, systemID system, unsigned int count
 {
     int error = DL_ERROR_NONE;
 
-    int i;
     for (int i = 0; i < count; i++)
     {
         componentID component = components[i];

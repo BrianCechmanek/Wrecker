@@ -27,7 +27,7 @@ int main(void)
 
 	Velocity_c ev = { 5, 0, 9 };
 	Render_c r = { '@' };
-	unsigned int e, e1;
+	unsigned int e;
 
     terminal_open();
 
@@ -46,16 +46,19 @@ int main(void)
 	model.Cells[0].x = -1;
 	model.Cells[0].y = 0;
 	model.Cells[0].characterCode = '|';
+	model.Cells[0].layer = 0;
 	model.Cells[1].bgColor = 0xFFFF0000;
 	model.Cells[1].fgColor = 0xFF000000;
 	model.Cells[1].x = 0;
 	model.Cells[1].y = 0;
 	model.Cells[1].characterCode = '-';
+	model.Cells[1].layer = 0;
 	model.Cells[2].bgColor = 0xFFFF0000;
 	model.Cells[2].fgColor = 0xFF000000;
 	model.Cells[2].x = 1;
 	model.Cells[2].y = 0;
 	model.Cells[2].characterCode = '|';
+	model.Cells[2].layer = 0;
 	model.numberOfCells = 3;
 
 	WRECK(spawn, &e);
@@ -90,18 +93,10 @@ int main(void)
 
 		//Update Game Elements
 		updateGame(deltaMs);
-		terminal_clear();
-		// Add the fps counter and frametime to the screen
-		char timebuffer[60];
-		char fpsbuffer[60];
-		sprintf(timebuffer, "%G ms", deltaMs);
-		unsigned fps = (unsigned)(1000.0 / deltaMs);
-		sprintf(fpsbuffer, "%d fps", fps);
-		terminal_print(1, 1, timebuffer);
-		terminal_print(1, 2, fpsbuffer);
-
+		
 		// Draw game
-		render(deltaMs);
+		render(deltaMs); 
+
     }
     //Call Destructors
     terminal_close();
