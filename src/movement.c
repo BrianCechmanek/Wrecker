@@ -35,7 +35,8 @@ void _process(struct diana *diana, void *user_data, unsigned int entity, float d
 	Move to that map.
 	*/
 
-	/*if (position->x < 0 || position->x >= position->map->width ||
+	/*
+    if (position->x < 0 || position->x >= position->map->width ||
 	position->y < 0 || position->y >=  position->map->height) {
 
 	Position_c *parentPos;

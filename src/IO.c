@@ -54,8 +54,8 @@ void initWreckState(void)
 // TODO: Rework to be more flexible
 void initDisplayBuffer(void)
 {
-    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * sizeof(*displayBuffer));
-    displayBuffer[0] = emalloc( DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(  displayBuffer ));
+    displayBuffer = emalloc( DBUFF_MEM_HEIGHT * sizeof( cellDisplayBuffer * ));
+    displayBuffer[0] = emalloc( DBUFF_MEM_HEIGHT * DBUFF_MEM_WIDTH * sizeof(  cellDisplayBuffer ));
     for (int i = 1; i < DBUFF_MEM_HEIGHT; i++){
         displayBuffer[i] = displayBuffer[0] + i * DBUFF_MEM_WIDTH;
     }
@@ -93,7 +93,6 @@ void initWrecker()
 void updateGame( double delta )
 {
     WRECK( process, delta );
-
 	WRECK(processSystem, movementSystemId, delta);
 }
 
