@@ -2,3 +2,6 @@
 test_krng
 test_damage
 wrecker
+*.exe
+windows/Build/*
+windows/CSFML/doc/*
