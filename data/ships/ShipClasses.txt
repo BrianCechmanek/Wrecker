@@ -1,0 +1,3 @@
+data\ships\ShipClasses\
+Scout.txt
+Bomber.txt

@@ -30,6 +30,7 @@
     <ClCompile Include="..\src\open-simplex-noise.c" />
     <ClCompile Include="..\src\render.c" />
     <ClCompile Include="..\src\resistance.c" />
+    <ClCompile Include="..\src\shipfactory.c" />
     <ClCompile Include="..\src\timer.c" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +53,7 @@
     <ClInclude Include="..\src\oldwrecker.h" />
     <ClInclude Include="..\src\open-simplex-noise.h" />
     <ClInclude Include="..\src\resistance.h" />
+    <ClInclude Include="..\src\shipfactory.h" />
     <ClInclude Include="..\src\systems.h" />
     <ClInclude Include="..\src\timer.h" />
     <ClInclude Include="..\src\util.h" />
@@ -119,7 +121,7 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)data $(SolutionDir)windows\Build\data /s /y
+      <Command>xcopy $(SolutionDir)data $(SolutionDir)windows\Build\data\ /s /y
 xcopy $(SolutionDir)windows\DebugDll $(SolutionDir)windows\Build /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -144,7 +146,7 @@ xcopy $(SolutionDir)windows\DebugDll $(SolutionDir)windows\Build /s /y</Command>
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)data $(SolutionDir)windows\Build\data /s /y
+      <Command>xcopy $(SolutionDir)data $(SolutionDir)windows\Build\data\ /s /y
 xcopy $(SolutionDir)windows\ReleaseDll $(SolutionDir)windows\Build /s /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
