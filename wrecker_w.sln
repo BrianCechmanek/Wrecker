@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrecker_w", "windows\wrecke
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tester", "windows\algorithmtester\tester\tester.vcxproj", "{D0748C30-5078-4324-A55F-32D2B5C137B2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parserGen", "windows\parsergen\parserGen\parserGen.vcxproj", "{4D147652-2712-45E9-9485-6C0F06338806}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{D0748C30-5078-4324-A55F-32D2B5C137B2}.Debug|Win32.Build.0 = Debug|Win32
 		{D0748C30-5078-4324-A55F-32D2B5C137B2}.Release|Win32.ActiveCfg = Release|Win32
 		{D0748C30-5078-4324-A55F-32D2B5C137B2}.Release|Win32.Build.0 = Release|Win32
+		{4D147652-2712-45E9-9485-6C0F06338806}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4D147652-2712-45E9-9485-6C0F06338806}.Debug|Win32.Build.0 = Debug|Win32
+		{4D147652-2712-45E9-9485-6C0F06338806}.Release|Win32.ActiveCfg = Release|Win32
+		{4D147652-2712-45E9-9485-6C0F06338806}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

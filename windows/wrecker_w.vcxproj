@@ -30,6 +30,7 @@
     <ClCompile Include="..\src\open-simplex-noise.c" />
     <ClCompile Include="..\src\render.c" />
     <ClCompile Include="..\src\resistance.c" />
+    <ClCompile Include="..\src\ShipDefParser.cpp" />
     <ClCompile Include="..\src\shipfactory.c" />
     <ClCompile Include="..\src\timer.c" />
   </ItemGroup>
@@ -53,6 +54,7 @@
     <ClInclude Include="..\src\oldwrecker.h" />
     <ClInclude Include="..\src\open-simplex-noise.h" />
     <ClInclude Include="..\src\resistance.h" />
+    <ClInclude Include="..\src\ShipDefParser.h" />
     <ClInclude Include="..\src\shipfactory.h" />
     <ClInclude Include="..\src\systems.h" />
     <ClInclude Include="..\src\timer.h" />

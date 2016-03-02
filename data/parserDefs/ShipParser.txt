@@ -1,0 +1,19 @@
+TYPE INT sscanf(line, "%*[^:]:%d]", &def->{DESTINATIONLOC});
+TYPE STRING sscanf(line, "%*[^:]:%[^\]]", &def->{DESTINATIONLOC});
+
+STRUCT ShipDef
+
+DATA NAME STRING mName
+DATA MAXWEIGHT INT mMaxWeight
+DATA MINWEIGHT INT mMinWeight
+DATA MINCREW INT mMinCrew
+DATA MAXCREW INT mMaxCrew
+
+STARTCUSTOMHEADER
+typedef struct ShipDefinition
+{
+	char mName[60];
+	unsigned mMaxWeight, mMinWeight;
+	unsigned mMinCrew, mMaxCrew;
+} ShipDef;
+ENDCUSTOMHEADER

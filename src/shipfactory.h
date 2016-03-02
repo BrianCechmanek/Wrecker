@@ -1,14 +1,10 @@
 #ifndef __SHIPFACTORY__H__
 #define __SHIPFACTORY__H__
 
-typedef struct ShipDefinition
-{
-	char mName[60];
-	unsigned mMaxWeight, mMinWeight;
-	unsigned mMinCrew, mMaxCrew;
-} ShipDef;
+#include "ShipDefParser.h"
+#include "krng.h"
 
 int LoadFactory(ShipDef ** shipDefinitions);
-void CreateShip(ShipDef * shipDefinitions, int numberOfDefs);
+void CreateShip(ShipDef * shipDefinitions, int numberOfDefs, struct krng *rng);
 
 #endif

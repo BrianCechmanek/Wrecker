@@ -2,80 +2,20 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-#include "krng.h"
 
 static const char * SHIPCLASSES_PATH = "data/ships/ShipClasses.txt";
 
 #define DEFAULT_DEFINITIONS_COUNT 10;
 #define DEFAULT_DEFINITIONS_COUNT_INCREMENT 5;
 
-void SetString(char* src, char ** dst)
-{
-	sscanf(src, "%*[^:]:%[^\]]", dst);
-}
-
-void SetInt(char* src, int * dst)
-{
-	sscanf(src, "%*[^:]:%d]", dst);
-}
-
-
-// WHY THE FUCK DOESN'T C HAVE PASS BY REFERENCE!!>!>!>!>!>?!?!?!?!?!?!?!
-void ShipDefParseLine(char * line, ShipDef *def)
-{
-	int CurrentChar = 1; // skip the opening [ character
-	if (*(line + CurrentChar) == 'N')
-	{
-		SetString(line, &(def->mName));
-	}
-	else if (*(line + CurrentChar) == 'M')
-	{
-		CurrentChar++;
-		if (*(line + CurrentChar) == 'A')
-		{
-			CurrentChar += 2; // Can skip the X
-			if (*(line + CurrentChar) == 'W')
-			{
-				SetInt(line, &def->mMaxWeight);
-			}
-
-			else if (*(line + CurrentChar) == 'C')
-			{
-				SetInt(line, &def->mMaxCrew);
-			}
-		}
-		else if (*(line + CurrentChar) == 'I')
-		{
-			CurrentChar += 2; // Can skip the X
-			if (*(line + CurrentChar) == 'W')
-			{
-				SetInt(line, &def->mMinWeight);
-			}
-			else if (*(line + CurrentChar) == 'C')
-			{
-				SetInt(line, &def->mMinCrew);
-			}
-		}
-	}
-}
-
-void LoadShipDef(char * path, ShipDef *shipDef)
-{
-	FILE * ShipdefFile = fopen(path, "rt");
-	char line[120];
-	while (fgets(line, 120, ShipdefFile) != NULL)
-	{
-		ShipDefParseLine(line, shipDef);
-	}
-}
-
 int LoadFactory(ShipDef ** shipDefinitions)
 {
 	unsigned numberOfDefinitions = 0;
 	unsigned maxNumberOfDefinitions = DEFAULT_DEFINITIONS_COUNT;
 
-	*shipDefinitions = malloc(maxNumberOfDefinitions * sizeof(ShipDef));
+	*shipDefinitions = malloc(maxNumberOfDefinitions * sizeof(struct ShipDefinition));
 
 	FILE * ShipClasses = fopen(SHIPCLASSES_PATH, "rt");
 
