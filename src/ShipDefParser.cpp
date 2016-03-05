@@ -39,6 +39,10 @@ void ShipDefParseLine(char * line, ShipDef *def) {
 		sscanf(line, "%*[^:]:%[^\]]", &def->mName);
 		break;
 	}
+	case 'R':{
+		char massiveTempBuffer[1024]; sscanf(line, "%*[^:]:%[^\]]", &massiveTempBuffer); const char s[2] = ","; char *token; token = strtok(massiveTempBuffer, s); ShipRoomList * shipRoom = malloc(sizeof(struct RoomList)); def->mRequiredRoomList = shipRoom; strcpy(shipRoom->mRoomName, token);	token = strtok(NULL, s); while (token != NULL) 	{ shipRoom->mNext = malloc(sizeof(struct RoomList)); shipRoom = shipRoom->mNext; strcpy(shipRoom->mRoomName, token); token = strtok(NULL, s); shipRoom->mNext = NULL; }
+		break;
+	}
 	}
 }
 

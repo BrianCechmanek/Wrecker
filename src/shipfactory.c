@@ -36,6 +36,7 @@ int LoadFactory(ShipDef ** shipDefinitions)
 			line[--len2] = '\0';
 		}
 		sprintf(fullPath, "%s%s", root, line);
+		Init_ShipDef(&(*shipDefinitions)[numberOfDefinitions]);
 		LoadShipDef(fullPath, &(*shipDefinitions)[numberOfDefinitions]);
 		if (++numberOfDefinitions >= maxNumberOfDefinitions)
 		{
@@ -54,4 +55,13 @@ void CreateShip(ShipDef * shipDefinitions, int numberOfDefs, struct krng *rng)
 	unsigned shipWeight = krng_rand_rangei(rng, shipType->mMinWeight, shipType->mMaxWeight);
 
 	printf("Created %s Ship, CrewSize is %u, weight is %u \n", shipType->mName, crewSize, shipWeight);
+
+	ShipRoomList *rooms = shipType->mRequiredRoomList;
+	printf("Required Rooms:");
+	while (rooms != NULL)
+	{
+		printf("%s ",rooms->mRoomName);
+		rooms = rooms->mNext;
+	}
+	printf("\n");
 }

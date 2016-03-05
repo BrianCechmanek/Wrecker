@@ -19,7 +19,10 @@ void OutputSwitch(std::vector <std::string> &dataVec, std::size_t charIndex, std
 		struct data dataVal = datas[dataVec[0]];
 		std::string typeString = types[dataVal.mType];
 		std::size_t pos = typeString.find(toReplace);
-		typeString.replace(pos, toReplace.length(), dataVal.mName);
+		if (pos < typeString.length())
+		{
+			typeString.replace(pos, toReplace.length(), dataVal.mName);
+		}
 		file << typeString << std::endl;
 	}
 	else
