@@ -15,6 +15,9 @@
 #include "components.h"
 #include "model.h"
 
+#include "shipfactory.h"
+#include "krng.h"
+
 gameState *Wrecker;
 Event_s *eventSys;
 struct diana *wreckerD;
@@ -73,6 +76,17 @@ int main(void)
 	printf("Timer started\n");
 	timer_lib_initialize();
 	start = timer_current();
+
+	ShipDef * shipDefinitions = NULL;
+	int numberOfDefintions = LoadFactory(&shipDefinitions);
+	// Generate 10 basic ships to test this.
+	struct krng shipRngTest;
+	krng_seed(&shipRngTest, KRNG_DEFAULT_SEED);
+
+	for (unsigned i = 0; i < 10; i++)
+	{
+		CreateShip(shipDefinitions, numberOfDefintions, &shipRngTest);
+	}
 
     while (running){
 		time = timer_elapsed_ticks(start);
