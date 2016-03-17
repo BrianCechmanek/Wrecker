@@ -1,6 +1,7 @@
 #include "ShipDefParser.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void ShipDefParseLine(char * line, ShipDef *def) {
 	switch (line[1]) {

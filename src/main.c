@@ -19,7 +19,6 @@
 #include "krng.h"
 
 gameState *Wrecker;
-Event_s *eventSys;
 struct diana *wreckerD;
 
 cellDisplayBuffer **displayBuffer;

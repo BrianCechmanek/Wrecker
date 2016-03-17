@@ -30,7 +30,6 @@ static void _process(struct diana *diana, void *user_data, unsigned int entity, 
 	}
 }
 
-
 int render_createSystem(struct diana *diana)
 {
     int error;

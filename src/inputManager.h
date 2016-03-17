@@ -8,6 +8,7 @@
  */
 
 #include <stdbool.h>
+#include "uthash.h"
 
 enum inputDomainType{
     INPUT_DOMAIN_GLOBAL = 0,
@@ -20,15 +21,21 @@ enum inputDomainType{
 
 typedef struct CmdDef 
 {
-    void (*cb)(void *);
-    char *name;
+    int keyCode;
 
-    bool isKB;
-    int code;
+    char *standardName;
+    void (*standard)(void);
 
-    bool shift;
-    bool ctrl;
-    bool alt;
+    char *shiftName;
+    void (*shiftMod)(void);
+    
+    char *ctrlName;
+    void (*ctrlMod)(void);
+
+    char *altName;
+    void (*altMod)(void);
+
+    UT_hash_handle hh;
 } CmdDef;
 
 extern float input_mouseX;
@@ -39,7 +46,7 @@ extern float input_mouseY;
  * Allows you to add a new command to a particular domain.
  * Ex: add_CmdDef( INPUT_DOMAIN_MENU, menu_up_select, "Select Up", true, TK_UP, false, false, false)
  */
-int add_cmdDef( int domain, void (*cb)(void *), char *name, bool isKB, int code, bool shift, bool ctrl, bool alt );
+int add_cmdDef( int domain, void (*cb)(void *), char *name, int code, bool shift, bool ctrl, bool alt );
 
 /*
  * toggle_inputDomain
@@ -57,7 +64,7 @@ int toggle_inputDomain( int domain );
  */
 int checkCommand( int code );
 
-void freeInputDomain(int domain );
+void freeAllInputDomains(void);
 
 /*
  * TODO:

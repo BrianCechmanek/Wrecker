@@ -76,13 +76,21 @@ typedef struct gameState
     int screenWidth;
 } gameState;
 
+enum ENTITY_TYPES
+{
+    E_OJBECT = 0,
+    E_ACTOR,
+    E_SHIP,
+    E_ENVIRONMENT,
+        NUM_OF_ENTITY_TYPES
+};
+
 /*
  *  Globals
  */
 
 // State Globals
 extern gameState    *Wrecker;
-extern Event_s      *eventSys;
 extern struct diana *wreckerD;
 extern cellDisplayBuffer **displayBuffer;
 

@@ -72,11 +72,6 @@ void _resizeWindow(void)
     //clearScreen();
     //redrawScreen(); ? Maybe just use clearScreen to mark new tiles for draw.
 }
-         
-void initEventSys(){
-    eventSys = newEvent_s();
-    //registerEvents();
-}
 
 /*
  * Inits game state and allocates memory for DIANA
@@ -86,7 +81,7 @@ void initWrecker()
 {
     initWreckState();
     initDisplayBuffer();
-    initEventSys();
+    initEventCenter();
     ecs_initialize();
 }
 

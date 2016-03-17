@@ -12,6 +12,12 @@
 #define E_LIST_MAX 100 // TEMPORARY: TODO:REWORK TO BE EXMAPDNING BUFFER
 
 typedef struct ModelCell ModelCell;
+    
+typedef struct componentEntry
+{
+    componentID component;
+    void *data;
+} componentEntry;
 
 typedef struct ent_list_c
 {
@@ -19,8 +25,16 @@ typedef struct ent_list_c
     short num;
 }ent_list_c;
 
+// Not sure why I added this.
+typedef struct raceComponents
+{
+    componentEntry *components;
+    int num;
+}raceComponents;
+
 typedef struct eType_c
 {
+    char *name;
     short type;
     bool has_map;
     bool active;
@@ -78,5 +92,9 @@ extern componentID ModelID;
 extern componentID MapID;
 extern componentID RNGID;
 extern componentID ent_listID;
+
+extern const Position_c  POSITION_DEFAULT;
+extern const Velocity_c  VELOCITY_DEFAULT;
+extern const Render_c    RENDER_DEFAULT;
 
 #endif
