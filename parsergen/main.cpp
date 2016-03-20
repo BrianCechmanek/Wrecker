@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
 	ouputHeaderFile << "#endif" << std::endl;
 	ouputHeaderFile.close();
 
-	std::ofstream ouputcppFile(structType + "Parser.cpp");
+	std::ofstream ouputcppFile(structType + "Parser.c");
 	ouputcppFile << "#include \"" << structType + "Parser.h" << "\"" << std::endl;
 	ouputcppFile << "#include <stdio.h>" << std::endl;
 	ouputcppFile << "#include <string.h>" << std::endl;

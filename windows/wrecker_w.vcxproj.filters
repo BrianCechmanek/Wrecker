@@ -78,7 +78,7 @@
     <ClCompile Include="..\src\shipfactory.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ShipDefParser.cpp">
+    <ClCompile Include="..\src\ShipDefParser.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

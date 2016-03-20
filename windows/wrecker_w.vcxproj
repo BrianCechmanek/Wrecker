@@ -30,7 +30,7 @@
     <ClCompile Include="..\src\open-simplex-noise.c" />
     <ClCompile Include="..\src\render.c" />
     <ClCompile Include="..\src\resistance.c" />
-    <ClCompile Include="..\src\ShipDefParser.cpp" />
+    <ClCompile Include="..\src\ShipDefParser.c" />
     <ClCompile Include="..\src\shipfactory.c" />
     <ClCompile Include="..\src\timer.c" />
   </ItemGroup>
