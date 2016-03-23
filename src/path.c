@@ -75,16 +75,6 @@ error:
     return false;
 }
 
-bool path_isEmpty( PathData *data )
-{
-    return (utarray_len(data->path) == 0) ? true : false;
-}
-
-int path_length( PathData *data )
-{
-    return utarray_len(data->path);
-}
-
 bool path_step( PathData *data, int *x, int *y, bool recalc)
 {
     int newx, newy;
@@ -115,6 +105,17 @@ bool path_step( PathData *data, int *x, int *y, bool recalc)
     data->y0 = newy;
     return true;
 }
+
+bool path_isEmpty( PathData *data )
+{
+    return (utarray_len(data->path) == 0) ? true : false;
+}
+
+int path_length( PathData *data )
+{
+    return utarray_len(data->path);
+}
+
 
 void path_atIndex( PathData *data, int index, int *x, int *y )
 {
