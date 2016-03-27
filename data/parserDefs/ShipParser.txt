@@ -1,6 +1,6 @@
 TYPE INT sscanf(line, "%*[^:]:%d]", &def->{DESTINATIONLOC});
 TYPE STRING sscanf(line, "%*[^:]:%[^\]]", &def->{DESTINATIONLOC});
-TYPE STRING_ARRAY char massiveTempBuffer[1024]; sscanf(line, "%*[^:]:%[^\]]", &massiveTempBuffer); const char s[2] = ","; char *token; token = strtok(massiveTempBuffer, s); ShipRoomList * shipRoom = malloc(sizeof(struct RoomList)); def->{DESTINATIONLOC} = shipRoom; strcpy(shipRoom->mRoomName, token);	token = strtok(NULL, s); while (token != NULL) 	{ shipRoom->mNext = malloc(sizeof(struct RoomList)); shipRoom = shipRoom->mNext; strcpy(shipRoom->mRoomName, token); token = strtok(NULL, s); shipRoom->mNext = NULL; }
+TYPE STRING_ARRAY char massiveTempBuffer[1024]; sscanf(line, "%*[^:]:%[^\]]", &massiveTempBuffer); const char s[2] = ","; char *token; token = strtok(massiveTempBuffer, s); ShipRoomList * shipRoom = malloc(sizeof(struct RoomList)); shipRoom->mNext = NULL; def->{DESTINATIONLOC} = shipRoom; strcpy(shipRoom->mRoomName, token);	token = strtok(NULL, s); while (token != NULL) 	{ shipRoom->mNext = malloc(sizeof(struct RoomList)); shipRoom = shipRoom->mNext; strcpy(shipRoom->mRoomName, token); token = strtok(NULL, s); shipRoom->mNext = NULL; }
 
 STRUCT ShipDef
 
@@ -10,6 +10,7 @@ DATA MINWEIGHT INT mMinWeight
 DATA MINCREW INT mMinCrew
 DATA MAXCREW INT mMaxCrew
 DATA REQUIREDROOMS STRING_ARRAY mRequiredRoomList
+DATA OPTIONALROOMS STRING_ARRAY mOptionalRoomList
 
 STARTCUSTOMHEADER
 typedef struct RoomList
@@ -24,11 +25,13 @@ typedef struct ShipDefinition
     unsigned mMaxWeight, mMinWeight;
     unsigned mMinCrew, mMaxCrew;
     ShipRoomList * mRequiredRoomList;
+    ShipRoomList * mOptionalRoomList;
 } ShipDef;
 
 static void Init_ShipDef(ShipDef*def) 
 { 
     def->mRequiredRoomList = 0; 
+    def->mOptionalRoomList = 0;
 }
 
 ENDCUSTOMHEADER
