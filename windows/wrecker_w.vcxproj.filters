@@ -81,6 +81,9 @@
     <ClCompile Include="..\src\ShipDefParser.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\roomfactory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\getopt.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ShipDefParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\roomfactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

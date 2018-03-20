@@ -40,14 +40,6 @@ typedef struct eType_c
     bool active;
 }eType_c;
 
-typedef struct Map_c
-{
-    entID parent;
-    char *title;
-    int height;
-    int width;
-    Cell *map;
-} Map_c;
 
 typedef struct position_c 
 {

@@ -15,6 +15,11 @@
 
 #define E_LIST_MAX 100
 
+const int dirList[8][2] = {
+//  NORTH    N_EAST   EAST    S_EAST  SOUTH   S_WEST   WEST     N_WEST
+    {0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}
+};
+
 //TODO: Rework into a resizing buffered list.
 
 Model_c *loadModel( char *filename );
@@ -130,13 +135,13 @@ error:
 */
 
 
-ent_list_c entitiesAt( Map_c *map, int xLoc, int yLoc)
+ent_list_c entitiesAt( Map_t *map, int xLoc, int yLoc)
 {
     ent_list_c list = {0};
     ent_list_c *parentList;
     Position_c *pos;
 
-    check( map->map, "NULL Map passed to entitiesAt()." );
+    check( map->grid, "NULL Map passed to entitiesAt()." );
     check ( xLoc >= 0 && yLoc >=0 && xLoc <= map->width && yLoc <= map->height,
             "Coordinates lookup outside Bounds");
 
@@ -205,4 +210,11 @@ ent_list_c getSurroundingEntities (Map_c *map, int xLoc, int yLoc )
     return list;
 }
 
+bool map_pathableCell( Map_t *map, int x, int y )
+{
+    if( map != NULL && x < map->width && y < map->height)
+        return map->grid[x][y].walkable;
+    else
+        return false;
+}
 

@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "roomfactory.h"
+
 
 static const char * SHIPCLASSES_PATH = "data/ships/ShipClasses.txt";
 
@@ -56,12 +58,76 @@ void CreateShip(ShipDef * shipDefinitions, int numberOfDefs, struct krng *rng)
 
 	printf("Created %s Ship, CrewSize is %u, weight is %u \n", shipType->mName, crewSize, shipWeight);
 
+	int weightPercentForRequired = krng_rand_rangei(rng, 40, 60);
+	int weightPercentForOptional = krng_rand_rangei(rng, 20, (100 - weightPercentForRequired < 40?100 - weightPercentForRequired - 5:40));
+
 	ShipRoomList *rooms = shipType->mRequiredRoomList;
-	printf("Required Rooms:");
+	printf("Required Rooms:\n");
+	int numReqRooms = 0;
+	int numOptRooms = 0;
+	
+	// count how many possible rooms the ship can have. 
 	while (rooms != NULL)
 	{
-		printf("%s ",rooms->mRoomName);
+		numReqRooms++;
 		rooms = rooms->mNext;
 	}
+	rooms = shipType->mOptionalRoomList;
+	while (rooms != NULL)
+	{
+		numOptRooms++;
+		rooms = rooms->mNext;
+	}
+
+	int actualNumberOfOptionalRooms = krng_rand_rangei(rng, 0, numOptRooms);
+	int differenceBetweenActualOptAndPossibleOpt = numOptRooms - actualNumberOfOptionalRooms;
+	
+	//Adjust weights to make up for difference, right now give 5% back to required for each opt not used.
+	weightPercentForRequired += 5 * differenceBetweenActualOptAndPossibleOpt;
+	weightPercentForOptional -= 5 * differenceBetweenActualOptAndPossibleOpt;
+
+	if (numReqRooms != 0)
+	{
+		int totalWeightForRequiredRooms = shipWeight * (weightPercentForRequired / 100.f);
+		rooms = shipType->mRequiredRoomList;
+
+		int weightPerRoom = totalWeightForRequiredRooms / numReqRooms;
+		while (rooms != NULL)
+		{
+			printf("%d: %s Stats: ", numReqRooms, rooms->mRoomName);
+			CreateRoom(weightPerRoom, rng);
+			rooms = rooms->mNext;
+		}
+	}
+
 	printf("\n");
+	printf("Optional Rooms:\n");
+	if (actualNumberOfOptionalRooms != 0)
+	{
+		int totalWeightForOptionalRooms = shipWeight * (weightPercentForOptional / 100.f);
+		rooms = shipType->mOptionalRoomList;
+
+		int weightPerRoom = totalWeightForOptionalRooms / actualNumberOfOptionalRooms;
+
+		while (actualNumberOfOptionalRooms != 0)
+		{
+			if (rooms == NULL)
+			{
+				rooms = shipType->mOptionalRoomList;
+			}
+
+			int shouldAddRoom = krng_rand_rangei(rng, 0, 1);
+			if (shouldAddRoom == 1)
+			{
+				printf("%d: %s Stats: ", actualNumberOfOptionalRooms, rooms->mRoomName);
+				CreateRoom(weightPerRoom, rng);
+				actualNumberOfOptionalRooms--;
+			}
+
+			rooms = rooms->mNext;
+		}
+	}
+	printf("\n");
+	printf("\n");
+
 }

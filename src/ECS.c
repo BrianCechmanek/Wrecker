@@ -9,7 +9,7 @@
 
 // Includes for components
 #include "health.h"
-#include "race.h"
+//#include "race.h"
 #include "resistance.h"
 #include "components.h" // TODO delete this header, break it up into components
 
@@ -28,7 +28,7 @@ static void _registerComponents(struct diana *diana)
         { "RNG",        sizeof(RNG_c),                      DL_COMPONENT_FLAG_INLINE, &RNGID },
         { "Health",     sizeof(struct healthComponent),     DL_COMPONENT_FLAG_INLINE, &HealthID },
         { "Resistance", sizeof(struct resistanceComponent), DL_COMPONENT_FLAG_INLINE, &ResistanceID },
-        { "Race",       sizeof(Race_c),                     DL_COMPONENT_FLAG_INLINE, &RaceID }
+//        { "Race",       sizeof(Race_c),                     DL_COMPONENT_FLAG_INLINE, &RaceID }
     };
     int error = ecs_createComponents(diana, ARRAY_SIZE(components), components);
 
